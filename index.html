@@ -774,11 +774,19 @@ async function gfetch(url, opts = {}) {
 }
 
 async function findSharedDrive() {
-  const r = await gfetch('https://www.googleapis.com/drive/v3/drives?pageSize=50');
-  const data = await r.json();
-  if (!data.drives) return null;
-  const drive = data.drives.find(d => d.name === SHARED_DRIVE_NAME);
-  return drive ? drive.id : null;
+  let pageToken = null;
+  do {
+    let url = 'https://www.googleapis.com/drive/v3/drives?pageSize=100';
+    if (pageToken) url += '&pageToken=' + encodeURIComponent(pageToken);
+    const r = await gfetch(url);
+    const data = await r.json();
+    console.log('Drives API response:', JSON.stringify(data));
+    if (!data.drives) return null;
+    const drive = data.drives.find(d => d.name === SHARED_DRIVE_NAME);
+    if (drive) return drive.id;
+    pageToken = data.nextPageToken;
+  } while (pageToken);
+  return null;
 }
 
 async function findOrCreateFolder(name, parentId) {
