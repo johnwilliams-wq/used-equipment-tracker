@@ -692,8 +692,9 @@
 // ── CONFIG ──
 const CLIENT_ID = '659141396162-8iilhoicrtpnnpie0m88m8f69lulgg4l.apps.googleusercontent.com';
 const SCOPES = 'https://www.googleapis.com/auth/drive';
-const INVENTORY_FOLDER_NAME = 'Equipment Inventory';
-const PHOTOS_FOLDER_NAME = 'Equipment Photos';
+const SHARED_DRIVE_NAME = 'Used Equipment Tracker';
+const INVENTORY_FOLDER_NAME = 'Used Equipment Data';
+const PHOTOS_FOLDER_NAME = 'Used Equipment Photos';
 
 // ── STATE ──
 let inventory = [];
@@ -760,27 +761,46 @@ function showApp() {
 }
 
 // ── DRIVE API ──
+let sharedDriveId = null;
+
 async function gfetch(url, opts = {}) {
   opts.headers = opts.headers || {};
   opts.headers['Authorization'] = 'Bearer ' + accessToken;
   return fetch(url, opts);
 }
 
-async function findOrCreateFolder(name, parentId = null) {
+async function findSharedDrive() {
+  const r = await gfetch('https://www.googleapis.com/drive/v3/drives?pageSize=50');
+  const data = await r.json();
+  if (!data.drives) return null;
+  const drive = data.drives.find(d => d.name === SHARED_DRIVE_NAME);
+  return drive ? drive.id : null;
+}
+
+async function findOrCreateFolder(name, parentId) {
   let q = `name='${name}' and mimeType='application/vnd.google-apps.folder' and trashed=false`;
   if (parentId) q += ` and '${parentId}' in parents`;
-  const r = await gfetch(`https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(q)}&fields=files(id,name)&supportsAllDrives=true&includeItemsFromAllDrives=true`);
+  const params = new URLSearchParams({
+    q,
+    fields: 'files(id,name)',
+    supportsAllDrives: 'true',
+    includeItemsFromAllDrives: 'true',
+    ...(sharedDriveId ? { driveId: sharedDriveId, corpora: 'drive' } : {})
+  });
+  const r = await gfetch(`https://www.googleapis.com/drive/v3/files?${params}`);
   const data = await r.json();
   if (data.files && data.files.length > 0) return data.files[0].id;
-  // Create it
+  // Create it inside the shared drive
   const meta = { name, mimeType: 'application/vnd.google-apps.folder' };
   if (parentId) meta.parents = [parentId];
+  else if (sharedDriveId) meta.parents = [sharedDriveId];
   const cr = await gfetch('https://www.googleapis.com/drive/v3/files?supportsAllDrives=true', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(meta)
   });
   const created = await cr.json();
+  if (created.error) throw new Error('Could not create folder: ' + created.error.message);
   return created.id;
 }
 
@@ -789,13 +809,21 @@ async function syncFromDrive() {
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span> Syncing...';
   try {
-    inventoryFolderId = await findOrCreateFolder(INVENTORY_FOLDER_NAME);
-    photosFolderId = await findOrCreateFolder(PHOTOS_FOLDER_NAME);
+    // Find the Shared Drive first
+    sharedDriveId = await findSharedDrive();
+    if (!sharedDriveId) {
+      showToast('⚠ Shared Drive "' + SHARED_DRIVE_NAME + '" not found — check name', 4000);
+      btn.disabled = false;
+      btn.innerHTML = `<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg> Sync Drive`;
+      return;
+    }
+    inventoryFolderId = await findOrCreateFolder(INVENTORY_FOLDER_NAME, sharedDriveId);
+    photosFolderId = await findOrCreateFolder(PHOTOS_FOLDER_NAME, sharedDriveId);
     await loadInventoryFile();
     await loadPhotoIndex();
     showToast('✓ Synced from Drive');
   } catch(e) {
-    showToast('Sync failed: ' + e.message);
+    showToast('Sync failed: ' + e.message, 4000);
     console.error(e);
   }
   btn.disabled = false;
@@ -804,9 +832,21 @@ async function syncFromDrive() {
 }
 
 async function loadInventoryFile() {
-  const r = await gfetch(`https://www.googleapis.com/drive/v3/files?q='${inventoryFolderId}' in parents and trashed=false&orderBy=modifiedTime desc&fields=files(id,name,mimeType)&supportsAllDrives=true&includeItemsFromAllDrives=true`);
+  const params = new URLSearchParams({
+    q: `'${inventoryFolderId}' in parents and trashed=false`,
+    orderBy: 'modifiedTime desc',
+    fields: 'files(id,name,mimeType)',
+    supportsAllDrives: 'true',
+    includeItemsFromAllDrives: 'true',
+    ...(sharedDriveId ? { driveId: sharedDriveId, corpora: 'drive' } : {})
+  });
+  const r = await gfetch(`https://www.googleapis.com/drive/v3/files?${params}`);
   const data = await r.json();
-  if (!data.files || data.files.length === 0) { inventory = []; return; }
+  if (!data.files || data.files.length === 0) {
+    inventory = [];
+    showToast('⚠ No file found in Used Equipment Data folder', 4000);
+    return;
+  }
   const file = data.files[0];
   const content = await gfetch(`https://www.googleapis.com/drive/v3/files/${file.id}?alt=media&supportsAllDrives=true`);
   const blob = await content.blob();
@@ -834,9 +874,16 @@ async function loadPhotoIndex() {
   photoMap = {};
   let pageToken = null;
   do {
-    let url = `https://www.googleapis.com/drive/v3/files?q='${photosFolderId}' in parents and trashed=false&fields=nextPageToken,files(id,name)&pageSize=1000&supportsAllDrives=true&includeItemsFromAllDrives=true`;
-    if (pageToken) url += '&pageToken=' + pageToken;
-    const r = await gfetch(url);
+    const params = new URLSearchParams({
+      q: `'${photosFolderId}' in parents and trashed=false`,
+      fields: 'nextPageToken,files(id,name)',
+      pageSize: '1000',
+      supportsAllDrives: 'true',
+      includeItemsFromAllDrives: 'true',
+      ...(sharedDriveId ? { driveId: sharedDriveId, corpora: 'drive' } : {}),
+      ...(pageToken ? { pageToken } : {})
+    });
+    const r = await gfetch(`https://www.googleapis.com/drive/v3/files?${params}`);
     const data = await r.json();
     if (data.files) {
       data.files.forEach(f => {
@@ -869,7 +916,7 @@ async function uploadPhoto(stock, file) {
   const form = new FormData();
   form.append('metadata', new Blob([JSON.stringify(meta)], { type: 'application/json' }));
   form.append('file', file);
-  const r = await gfetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&supportsAllDrives=true', {
+  const r = await gfetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&supportsAllDrives=true&includeItemsFromAllDrives=true', {
     method: 'POST', body: form
   });
   const data = await r.json();
@@ -879,7 +926,8 @@ async function uploadPhoto(stock, file) {
     showToast('✓ Photo saved to Drive');
     render();
   } else {
-    showToast('Upload failed');
+    console.error('Upload error', data);
+    showToast('Upload failed: ' + (data.error?.message || 'unknown error'), 4000);
   }
 }
 
