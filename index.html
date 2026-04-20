@@ -680,29 +680,51 @@ function sortData(data){
 
 // ── FINANCIAL HELPERS ──
 function dialSVG(pct){
+  // Clean semicircle: left=green (healthy), right=red (interest bearing)
+  // pct = % that is interest bearing (red portion on the RIGHT)
   pct=Math.round(Math.max(0,Math.min(100,pct)));
-  const R=52,cx=65,cy=62;
-  function pt(deg){const rad=(deg-180)*Math.PI/180;return{x:cx+R*Math.cos(rad),y:cy+R*Math.sin(rad)};}
-  const startDeg=0,endDeg=180;
-  const splitDeg=pct*1.8; // 0-180 range
-  const s=pt(startDeg),split=pt(splitDeg),e=pt(endDeg);
-  const gLarge=splitDeg>90?1:0;
-  const rLarge=(180-splitDeg)>90?1:0;
-  const color=pct>50?'#dc2626':pct>25?'#d97706':'#16a34a';
-  let greenArc='',redArc='';
-  if(pct>0&&pct<100){
-    greenArc=`<path d="M ${s.x.toFixed(1)} ${s.y.toFixed(1)} A ${R} ${R} 0 ${gLarge} 1 ${split.x.toFixed(1)} ${split.y.toFixed(1)}" fill="none" stroke="#16a34a" stroke-width="13" stroke-linecap="butt"/>`;
-    redArc=`<path d="M ${split.x.toFixed(1)} ${split.y.toFixed(1)} A ${R} ${R} 0 ${rLarge} 1 ${e.x.toFixed(1)} ${e.y.toFixed(1)}" fill="none" stroke="#dc2626" stroke-width="13" stroke-linecap="butt"/>`;
-  }else if(pct===0){
-    greenArc=`<path d="M ${s.x.toFixed(1)} ${s.y.toFixed(1)} A ${R} ${R} 0 1 1 ${e.x.toFixed(1)} ${e.y.toFixed(1)}" fill="none" stroke="#16a34a" stroke-width="13"/>`;
-  }else{
-    redArc=`<path d="M ${s.x.toFixed(1)} ${s.y.toFixed(1)} A ${R} ${R} 0 1 1 ${e.x.toFixed(1)} ${e.y.toFixed(1)}" fill="none" stroke="#dc2626" stroke-width="13"/>`;
+  const R=50,cx=65,cy=64,sw=16;
+  // Semicircle goes from left (180deg) to right (0deg) through the top
+  // Green portion: left side, (100-pct)% of arc
+  // Red portion: right side, pct% of arc
+  // Total arc = 180 degrees (PI radians)
+  // Convert pct to angle split point (in degrees from left=180 to right=0)
+  // greenDeg = (1-pct/100)*180, measured from left going clockwise to top to right
+  const greenFrac=(100-pct)/100;
+  const redFrac=pct/100;
+  // Points: left end, split point, right end
+  function ptFromAngle(angleDeg){
+    const rad=angleDeg*Math.PI/180;
+    return{x:(cx+R*Math.cos(rad)).toFixed(2),y:(cy-R*Math.sin(rad)).toFixed(2)};
   }
-  return`<svg viewBox="0 0 130 72" width="130" height="72">
-    <path d="M ${s.x.toFixed(1)} ${s.y.toFixed(1)} A ${R} ${R} 0 1 1 ${e.x.toFixed(1)} ${e.y.toFixed(1)}" fill="none" stroke="#f3f4f6" stroke-width="13"/>
-    ${greenArc}${redArc}
-    <text x="${cx}" y="${cy-8}" text-anchor="middle" font-size="18" font-weight="600" font-family="DM Mono,monospace" fill="${color}">${pct}%</text>
-    <text x="${cx}" y="${cy+8}" text-anchor="middle" font-size="9" fill="#9ca3af">interest bearing</text>
+  const leftPt=ptFromAngle(180);   // left end of semicircle
+  const rightPt=ptFromAngle(0);    // right end
+  // split angle: start from 180, go by (greenFrac * 180) degrees counterclockwise
+  const splitAngle=180-(greenFrac*180);
+  const splitPt=ptFromAngle(splitAngle);
+  const color=pct>50?'#dc2626':pct>25?'#d97706':'#16a34a';
+  let greenPath='',redPath='';
+  if(pct===0){
+    // All green
+    greenPath=`<path d="M ${leftPt.x} ${leftPt.y} A ${R} ${R} 0 0 1 ${rightPt.x} ${rightPt.y}" fill="none" stroke="#16a34a" stroke-width="${sw}" stroke-linecap="round"/>`;
+  }else if(pct===100){
+    // All red
+    redPath=`<path d="M ${leftPt.x} ${leftPt.y} A ${R} ${R} 0 0 1 ${rightPt.x} ${rightPt.y}" fill="none" stroke="#dc2626" stroke-width="${sw}" stroke-linecap="round"/>`;
+  }else{
+    const gLarge=greenFrac>0.5?1:0;
+    const rLarge=redFrac>0.5?1:0;
+    greenPath=`<path d="M ${leftPt.x} ${leftPt.y} A ${R} ${R} 0 ${gLarge} 1 ${splitPt.x} ${splitPt.y}" fill="none" stroke="#16a34a" stroke-width="${sw}" stroke-linecap="round"/>`;
+    redPath=`<path d="M ${splitPt.x} ${splitPt.y} A ${R} ${R} 0 ${rLarge} 1 ${rightPt.x} ${rightPt.y}" fill="none" stroke="#dc2626" stroke-width="${sw}" stroke-linecap="round"/>`;
+  }
+  return`<svg viewBox="0 0 130 80" width="130" height="80">
+    <path d="M ${leftPt.x} ${leftPt.y} A ${R} ${R} 0 0 1 ${rightPt.x} ${rightPt.y}" fill="none" stroke="#e5e7eb" stroke-width="${sw}" stroke-linecap="round"/>
+    ${greenPath}${redPath}
+    <text x="${cx}" y="${cy+2}" text-anchor="middle" font-size="19" font-weight="600" font-family="DM Mono,monospace" fill="${color}">${pct}%</text>
+    <text x="${cx}" y="${cy+18}" text-anchor="middle" font-size="9" fill="#9ca3af">interest bearing</text>
+    <text x="6" y="${cy+22}" text-anchor="start" font-size="8" fill="#16a34a">●</text>
+    <text x="14" y="${cy+22}" text-anchor="start" font-size="8" fill="#9ca3af">healthy</text>
+    <text x="${cx+14}" y="${cy+22}" text-anchor="start" font-size="8" fill="#dc2626">●</text>
+    <text x="${cx+22}" y="${cy+22}" text-anchor="start" font-size="8" fill="#9ca3af">aging</text>
   </svg>`;
 }
 function barChartHTML(cost,floor,owned,maxVal){
@@ -721,6 +743,7 @@ function render(){
   if(currentView==='dashboard')renderDashboard(c);
   else if(currentView==='list')renderList(c);
   else if(currentView==='pictures')renderPictures(c);
+  else if(currentView==='catalogue')renderCatalogue(c);
 }
 
 function dc(label,count,color,onclick){
@@ -782,16 +805,16 @@ function renderDashboard(c){
     <div class="card-grid">
       ${dc('New — 1–30 days',b1.length,'green',"navigate('list','all','age','0-30')")}
       ${dc('31–150 days',b2.length,'green',"navigate('list','all','age','31-150')")}
-      ${dc('151–240 days',b3.length,'',"navigate('list','all','age','151-240')")}
-      ${dc('Move — 241–270 days',b4.length,b4.length>0?'amber':'',"navigate('list','all','age','241-270')")}
-      ${dc('Interest — 271–360 days',b5.length,b5.length>0?'amber':'',"navigate('list','all','age','271-360')")}
-      ${dc('Auction — 360+ days',b6.length,b6.length>0?'red':'',"navigate('list','all','age','360+')")}
+      ${dc('151–240 days',b3.length,'green',"navigate('list','all','age','151-240')")}
+      ${dc('Move — 241–270 days',b4.length,'amber',"navigate('list','all','age','241-270')")}
+      ${dc('Interest — 271–360 days',b5.length,'amber',"navigate('list','all','age','271-360')")}
+      ${dc('Auction — 360+ days',b6.length,'red',"navigate('list','all','age','360+')")}
     </div>
 
-    <div class="section-label">AGDealer</div>
+    <div class="section-label">AG Dealer</div>
     <div class="card-grid">
-      ${dc('Not yet posted',notPosted.length,notPosted.length>0?'amber':'green',"navigate('list','all','notposted','notposted')")}
-      ${dc('Posted',Object.keys(postedUnits).length,'agdealer',"navigate('list','all','posted','posted')")}
+      ${dc('Not yet posted',notPosted.length,notPosted.length>0?'amber':'green',"navigate('catalogue','all','notposted','notposted')")}
+      ${dc('Posted',Object.keys(postedUnits).length,'agdealer',"navigate('catalogue','all','posted','posted')")}
     </div>
 
     <div class="section-label">Financial Details</div>
@@ -1095,6 +1118,50 @@ async function switchPhoto(idx){
     el.classList.toggle('active',i===idx);
   });
   loadMainPhoto(photos[idx].id);
+}
+
+function renderCatalogue(c){
+  // Catalogue view for AG Dealer posted/notposted
+  const isPostedView=listFilterVal==='posted';
+  let units;
+  if(isPostedView){
+    units=inventory.filter(u=>!soldUnits[u.stock]&&postedUnits[u.stock]);
+  }else{
+    units=inventory.filter(u=>!soldUnits[u.stock]&&photoMap[u.stock]&&photoMap[u.stock].length>0&&!postedUnits[u.stock]);
+  }
+  const title=isPostedView?'Posted on AG Dealer':'Not Yet Posted on AG Dealer';
+  c.innerHTML=`
+    <div class="list-header">
+      <button class="back-btn" onclick="navigate('dashboard')"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+      <div class="list-title">${title}</div>
+      <div class="list-count">${units.length} units</div>
+    </div>
+    <div class="pic-grid">
+      ${units.map(u=>{
+        const photos=photoMap[u.stock]||[];
+        const isPosted=!!postedUnits[u.stock];
+        return`<div class="pic-card" onclick="openUnit('${u.stock}')">
+          <div class="pic-img" id="agpic-${u.stock}">${photos.length>0?'':'📷'}</div>
+          <div class="pic-body">
+            <div class="pic-stock" style="display:flex;align-items:center;gap:4px">
+              ${u.stock} · ${u.loc==='S'?'Scotland':'Mallard'}
+              ${isPosted?'<span class="badge badge-ag" style="margin-left:2px">Posted</span>':''}
+            </div>
+            <div class="pic-name">${u.year} ${u.make} ${u.model}</div>
+            <div class="pic-price">${fmt(u.price)}</div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>`;
+  // Load thumbs
+  units.forEach(async u=>{
+    const photos=photoMap[u.stock]||[];
+    if(photos.length>0){
+      const url=await getPhotoUrl(photos[0].id);
+      const el=document.getElementById('agpic-'+u.stock);
+      if(el&&url)el.innerHTML=`<img src="${url}" alt="${u.model}">`;
+    }
+  });
 }
 
 function renderPictures(c){
