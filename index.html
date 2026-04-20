@@ -7,201 +7,241 @@
 <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iIzNkM2QzZCIvPgogIDxjaXJjbGUgY3g9IjEwIiBjeT0iMjIiIHI9IjciIGZpbGw9IiNlODVkMDQiIHN0cm9rZT0iI2M0NGQwMyIgc3Ryb2tlLXdpZHRoPSIxIi8+CiAgPGNpcmNsZSBjeD0iMTAiIGN5PSIyMiIgcj0iMyIgZmlsbD0iI2M0NGQwMyIvPgogIDxjaXJjbGUgY3g9IjI0IiBjeT0iMjQiIHI9IjQiIGZpbGw9IiNlODVkMDQiIHN0cm9rZT0iI2M0NGQwMyIgc3Ryb2tlLXdpZHRoPSIxIi8+CiAgPGNpcmNsZSBjeD0iMjQiIGN5PSIyNCIgcj0iMS41IiBmaWxsPSIjYzQ0ZDAzIi8+CiAgPHJlY3QgeD0iOSIgeT0iMTciIHdpZHRoPSIxNiIgaGVpZ2h0PSI2IiByeD0iMSIgZmlsbD0iI2U4NWQwNCIvPgogIDxyZWN0IHg9IjE3IiB5PSIxNCIgd2lkdGg9IjkiIGhlaWdodD0iNSIgcng9IjEiIGZpbGw9IiNjNDRkMDMiLz4KICA8cmVjdCB4PSI4IiB5PSIxMSIgd2lkdGg9IjkiIGhlaWdodD0iNyIgcng9IjEiIGZpbGw9IiNlODVkMDQiLz4KICA8cmVjdCB4PSIxMCIgeT0iMTIuNSIgd2lkdGg9IjUiIGhlaWdodD0iMy41IiByeD0iMC41IiBmaWxsPSIjMWExYTFhIiBvcGFjaXR5PSIwLjYiLz4KICA8cmVjdCB4PSIxOSIgeT0iMTAiIHdpZHRoPSIyIiBoZWlnaHQ9IjUiIHJ4PSIxIiBmaWxsPSIjYzQ0ZDAzIi8+Cjwvc3ZnPg==" type="image/svg+xml">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --orange:#e85d04; --orange-dark:#c44d03; --orange-light:#fff0e6;
-    --black:#0f0f0f; --black-2:#1a1a1a; --black-3:#242424;
-    --scotland-bg:#fff3e6; --scotland-text:#9c3d02; --scotland-border:#f4a86a;
-    --mallard-bg:#dbeafe; --mallard-text:#1e3a8a; --mallard-border:#93c5fd;
-    --red:#dc2626; --red-light:#fee2e2;
-    --amber:#d97706; --amber-light:#fef3c7;
-    --green:#16a34a; --green-light:#dcfce7;
-    --gray-50:#f9fafb; --gray-100:#f3f4f6; --gray-200:#e5e7eb;
-    --gray-300:#d1d5db; --gray-400:#9ca3af; --gray-500:#6b7280;
-    --gray-600:#4b5563; --gray-700:#374151; --gray-900:#111827;
-    --sidebar-w:200px;
-    --radius:8px; --radius-lg:12px;
-    --shadow:0 1px 3px rgba(0,0,0,0.1); --shadow-md:0 4px 16px rgba(0,0,0,0.12);
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{font-family:'DM Sans',sans-serif;background:#f0f0f0;color:var(--gray-900);min-height:100vh;-webkit-font-smoothing:antialiased;}
+:root{
+  --orange:#e85d04;--orange-dark:#c44d03;--orange-light:#fff0e6;
+  --black:#0f0f0f;--black-2:#1a1a1a;--black-3:#242424;
+  --scotland-bg:#fff3e6;--scotland-text:#9c3d02;--scotland-border:#f4a86a;
+  --mallard-bg:#dbeafe;--mallard-text:#1e3a8a;--mallard-border:#93c5fd;
+  --red:#dc2626;--red-light:#fee2e2;
+  --amber:#d97706;--amber-light:#fef3c7;
+  --green:#16a34a;--green-light:#dcfce7;
+  --purple:#7c3aed;--purple-light:#f3e8ff;
+  --gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;
+  --gray-300:#d1d5db;--gray-400:#9ca3af;--gray-500:#6b7280;
+  --gray-600:#4b5563;--gray-700:#374151;--gray-900:#111827;
+  --sidebar-w:200px;--radius:8px;--radius-lg:12px;
+  --shadow:0 1px 3px rgba(0,0,0,0.1);--shadow-md:0 4px 16px rgba(0,0,0,0.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:#f0f0f0;color:var(--gray-900);min-height:100vh;-webkit-font-smoothing:antialiased;}
 
-  /* ── AUTH ── */
-  #auth-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--black);}
-  .auth-card{background:var(--black-2);border:1px solid var(--black-3);border-radius:var(--radius-lg);padding:40px;width:380px;text-align:center;}
-  .auth-logo{width:60px;height:60px;background:var(--orange);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;}
-  .auth-title{font-size:18px;font-weight:600;color:white;margin-bottom:4px;}
-  .auth-sub{font-size:12px;color:var(--gray-400);margin-bottom:28px;line-height:1.5;}
-  .google-btn{width:100%;padding:11px 20px;border-radius:var(--radius);border:1px solid var(--black-3);background:white;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:var(--gray-700);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:background 0.15s;}
-  .google-btn:hover{background:var(--gray-50);}
+/* AUTH */
+#auth-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--black);}
+.auth-card{background:var(--black-2);border:1px solid var(--black-3);border-radius:var(--radius-lg);padding:40px;width:380px;text-align:center;}
+.auth-logo{width:60px;height:60px;background:var(--orange);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;}
+.auth-title{font-size:18px;font-weight:600;color:white;margin-bottom:4px;}
+.auth-sub{font-size:12px;color:var(--gray-400);margin-bottom:28px;line-height:1.5;}
+.google-btn{width:100%;padding:11px 20px;border-radius:var(--radius);border:1px solid var(--black-3);background:white;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;color:var(--gray-700);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:background 0.15s;}
+.google-btn:hover{background:var(--gray-50);}
 
-  /* ── APP SHELL ── */
-  #app{display:none;min-height:100vh;}
+/* APP SHELL */
+#app{display:none;min-height:100vh;}
+.topbar{background:var(--black);padding:0 20px;height:54px;display:flex;align-items:center;justify-content:space-between;position:fixed;top:0;left:0;right:0;z-index:60;border-bottom:2px solid var(--orange);}
+.topbar-left{display:flex;align-items:center;gap:10px;}
+.topbar-logo{width:32px;height:32px;background:var(--orange);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.topbar-title{font-size:13px;font-weight:600;color:white;line-height:1.2;}
+.topbar-title span{display:block;font-size:10px;font-weight:400;color:var(--gray-500);}
+.topbar-right{display:flex;align-items:center;gap:10px;}
+.sync-btn{background:var(--orange);color:white;border:none;border-radius:7px;padding:7px 12px;font-size:12px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background 0.15s;}
+.sync-btn:hover{background:var(--orange-dark);}
+.sync-btn:disabled{opacity:0.5;cursor:not-allowed;}
+.user-avatar{width:30px;height:30px;border-radius:50%;background:var(--black-3);border:2px solid var(--orange);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--orange);overflow:hidden;flex-shrink:0;}
+.user-avatar img{width:100%;height:100%;object-fit:cover;}
 
-  .topbar{background:var(--black);padding:0 20px;height:54px;display:flex;align-items:center;justify-content:space-between;position:fixed;top:0;left:0;right:0;z-index:60;border-bottom:2px solid var(--orange);}
-  .topbar-left{display:flex;align-items:center;gap:10px;}
-  .topbar-logo{width:32px;height:32px;background:var(--orange);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-  .topbar-title{font-size:13px;font-weight:600;color:white;line-height:1.2;}
-  .topbar-title span{display:block;font-size:10px;font-weight:400;color:var(--gray-500);}
-  .topbar-right{display:flex;align-items:center;gap:10px;}
-  .sync-btn{background:var(--orange);color:white;border:none;border-radius:7px;padding:7px 12px;font-size:12px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background 0.15s;}
-  .sync-btn:hover{background:var(--orange-dark);}
-  .sync-btn:disabled{opacity:0.5;cursor:not-allowed;}
-  .user-avatar{width:30px;height:30px;border-radius:50%;background:var(--black-3);border:2px solid var(--orange);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--orange);overflow:hidden;flex-shrink:0;}
-  .user-avatar img{width:100%;height:100%;object-fit:cover;}
+/* LAYOUT */
+.app-body{display:flex;padding-top:54px;min-height:100vh;}
+.sidenav{width:var(--sidebar-w);background:var(--black);border-right:2px solid var(--orange);position:fixed;top:54px;left:0;bottom:0;z-index:50;display:flex;flex-direction:column;padding:16px 0;overflow-y:auto;}
+.nav-btn{display:flex;align-items:center;gap:10px;background:none;border:none;cursor:pointer;padding:11px 20px;color:var(--gray-500);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;transition:color 0.15s,background 0.15s;width:100%;text-align:left;border-left:3px solid transparent;}
+.nav-btn svg{width:18px;height:18px;flex-shrink:0;}
+.nav-btn.active{color:var(--orange);border-left-color:var(--orange);background:rgba(232,93,4,0.08);}
+.nav-btn:hover:not(.active){color:var(--gray-300);background:rgba(255,255,255,0.04);}
+.main-content{margin-left:var(--sidebar-w);flex:1;padding:20px;min-height:calc(100vh - 54px);}
+.bottomnav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--black);border-top:2px solid var(--orange);justify-content:space-around;padding:7px 0 10px;z-index:50;}
 
-  /* ── LAYOUT: sidebar on desktop, bottom on mobile ── */
-  .app-body{display:flex;padding-top:54px;min-height:100vh;}
+@media(max-width:700px){
+  .sidenav{display:none;}
+  .main-content{margin-left:0;padding:14px;padding-bottom:76px;}
+  .bottomnav{display:flex;}
+  .nav-btn{flex-direction:column;align-items:center;gap:2px;padding:4px 10px;font-size:10px;border-left:none;border-top:3px solid transparent;width:auto;}
+  .nav-btn.active{border-left:none;border-top-color:var(--orange);background:none;}
+  .nav-btn svg{width:19px;height:19px;}
+  .topbar-title span{display:none;}
+  .fin-grid{grid-template-columns:1fr!important;}
+}
 
-  /* Sidebar (desktop) */
-  .sidenav{width:var(--sidebar-w);background:var(--black);border-right:2px solid var(--orange);position:fixed;top:54px;left:0;bottom:0;z-index:50;display:flex;flex-direction:column;padding:16px 0;}
-  .nav-btn{display:flex;align-items:center;gap:10px;background:none;border:none;cursor:pointer;padding:11px 20px;color:var(--gray-500);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;transition:color 0.15s,background 0.15s;width:100%;text-align:left;border-left:3px solid transparent;}
-  .nav-btn svg{width:18px;height:18px;flex-shrink:0;}
-  .nav-btn.active{color:var(--orange);border-left-color:var(--orange);background:rgba(232,93,4,0.08);}
-  .nav-btn:hover:not(.active){color:var(--gray-300);background:rgba(255,255,255,0.04);}
+/* DASHBOARD */
+.page-header{margin-bottom:16px;display:flex;align-items:baseline;gap:10px;}
+.page-title{font-size:20px;font-weight:600;color:var(--gray-900);letter-spacing:-0.02em;}
+.page-sub{font-size:12px;color:var(--gray-500);}
+.section-label{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--orange);margin-bottom:8px;margin-top:18px;}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;}
+.dash-card{background:white;border:1px solid var(--gray-200);border-top:3px solid var(--gray-300);border-radius:var(--radius-lg);padding:12px 14px;cursor:pointer;transition:box-shadow 0.15s;}
+.dash-card:hover{box-shadow:var(--shadow);}
+.dash-card.orange{border-top-color:var(--orange);}
+.dash-card.blue{border-top-color:#3b82f6;}
+.dash-card.red{border-top-color:var(--red);background:#fff8f8;}
+.dash-card.amber{border-top-color:var(--amber);}
+.dash-card.green{border-top-color:var(--green);}
+.dash-card.purple{border-top-color:var(--purple);background:var(--purple-light);}
+.dash-card.agdealer{border-top-color:#1a6b3c;background:#f0fdf4;}
+.dash-card-label{font-size:11px;color:var(--gray-500);margin-bottom:6px;line-height:1.35;}
+.dash-card.red .dash-card-label{color:#991b1b;}
+.dash-card-count{font-size:30px;font-weight:300;font-family:'DM Mono',monospace;color:var(--gray-900);}
+.dash-card.orange .dash-card-count{color:var(--orange);}
+.dash-card.blue .dash-card-count{color:#1d4ed8;}
+.dash-card.red .dash-card-count{color:var(--red);}
+.dash-card.amber .dash-card-count{color:var(--amber);}
+.dash-card.green .dash-card-count{color:var(--green);}
+.dash-card.purple .dash-card-count{color:var(--purple);}
+.dash-card.agdealer .dash-card-count{color:#166534;}
 
-  /* Main content area */
-  .main-content{margin-left:var(--sidebar-w);flex:1;padding:20px;max-width:calc(1200px + var(--sidebar-w));min-height:calc(100vh - 54px);}
+/* RECENTLY SOLD */
+.sold-list{margin-top:8px;}
+.sold-item{background:white;border:1px solid #e9d5ff;border-radius:var(--radius);padding:8px 12px;margin-bottom:6px;display:flex;align-items:center;gap:10px;font-size:12px;}
+.sold-item-name{font-weight:500;color:var(--gray-900);flex:1;}
+.sold-item-date{font-size:11px;color:var(--gray-400);}
+.sold-badge{background:#f3e8ff;color:var(--purple);font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;}
 
-  /* Bottom nav (mobile only, hidden on desktop) */
-  .bottomnav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--black);border-top:2px solid var(--orange);justify-content:space-around;padding:7px 0 10px;z-index:50;}
+/* FINANCIAL SECTION */
+.fin-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:0;}
+.fin-card{background:white;border:1px solid var(--gray-200);border-top:3px solid var(--orange);border-radius:var(--radius-lg);padding:14px 16px;display:flex;flex-direction:column;align-items:center;}
+.fin-card.blue-top{border-top-color:#3b82f6;}
+.fin-card.green-top{border-top-color:var(--green);}
+.fin-card-title{font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--gray-500);margin-bottom:10px;text-align:center;width:100%;}
+.dial-legend{display:flex;gap:12px;font-size:10px;margin-top:6px;justify-content:center;}
+.dial-legend span{display:flex;align-items:center;gap:3px;}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex-shrink:0;}
+.bar-chart{width:100%;}
+.bar-row{margin-bottom:8px;}
+.bar-label{font-size:10px;color:var(--gray-500);margin-bottom:3px;display:flex;justify-content:space-between;}
+.bar-label strong{font-weight:600;color:var(--gray-700);}
+.bar-track{height:14px;background:var(--gray-100);border-radius:4px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:4px;}
 
-  /* Mobile overrides */
-  @media(max-width:700px){
-    .sidenav{display:none;}
-    .main-content{margin-left:0;padding:14px;padding-bottom:76px;}
-    .bottomnav{display:flex;}
-    .nav-btn{flex-direction:column;align-items:center;gap:2px;padding:4px 10px;font-size:10px;border-left:none;border-top:3px solid transparent;width:auto;}
-    .nav-btn.active{border-left:none;border-top-color:var(--orange);background:none;}
-    .nav-btn svg{width:19px;height:19px;}
-    .topbar-title span{display:none;}
-  }
+/* LIST / TABLE */
+.list-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
+.back-btn{background:none;border:none;cursor:pointer;color:var(--gray-500);padding:4px;display:flex;align-items:center;border-radius:6px;transition:color 0.15s;}
+.back-btn:hover{color:var(--orange);}
+.back-btn svg{width:18px;height:18px;}
+.list-title{font-size:16px;font-weight:600;color:var(--gray-900);}
+.list-count{margin-left:auto;font-size:12px;color:var(--gray-500);background:var(--gray-100);padding:3px 10px;border-radius:20px;}
+.search-wrap{position:relative;margin-bottom:10px;}
+.search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--gray-400);}
+.search-input{width:100%;padding:8px 10px 8px 30px;border-radius:var(--radius);border:1px solid var(--gray-200);background:white;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--gray-900);}
+.search-input:focus{outline:none;border-color:var(--orange);}
+.table-wrap{overflow-x:auto;border-radius:var(--radius-lg);border:1px solid var(--gray-200);background:white;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+thead tr{background:var(--black);}
+thead th{padding:9px 10px;text-align:left;font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--gray-400);white-space:nowrap;border-right:1px solid var(--black-3);cursor:pointer;user-select:none;}
+thead th:last-child{border-right:none;}
+thead th:hover{color:white;}
+.sort-arrow{margin-left:4px;opacity:0.4;font-size:9px;}
+.sort-arrow.active{opacity:1;color:var(--orange);}
+tbody tr{border-bottom:1px solid var(--gray-100);cursor:pointer;transition:background 0.1s;}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:hover{background:var(--orange-light);}
+tbody tr.sold-row{opacity:0.45;background:#faf5ff;}
+tbody td{padding:8px 10px;color:var(--gray-700);white-space:nowrap;border-right:1px solid var(--gray-100);}
+tbody td:last-child{border-right:none;}
+.td-mono{font-family:'DM Mono',monospace;font-size:11px;color:var(--gray-500);}
+.td-bold{font-weight:500;color:var(--gray-900);}
+.td-right{text-align:right;font-family:'DM Mono',monospace;}
 
-  /* ── DASHBOARD ── */
-  .page-header{margin-bottom:16px;display:flex;align-items:baseline;gap:10px;}
-  .page-title{font-size:20px;font-weight:600;color:var(--gray-900);letter-spacing:-0.02em;}
-  .page-sub{font-size:12px;color:var(--gray-500);}
-  .section-label{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--orange);margin-bottom:8px;margin-top:18px;}
-  .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;}
-  .dash-card{background:white;border:1px solid var(--gray-200);border-top:3px solid var(--gray-300);border-radius:var(--radius-lg);padding:12px 14px;cursor:pointer;transition:box-shadow 0.15s;}
-  .dash-card:hover{box-shadow:var(--shadow);}
-  .dash-card.orange{border-top-color:var(--orange);}
-  .dash-card.blue{border-top-color:#3b82f6;}
-  .dash-card.red{border-top-color:var(--red);background:#fff8f8;}
-  .dash-card.amber{border-top-color:var(--amber);}
-  .dash-card.green{border-top-color:var(--green);}
-  .dash-card.sold{border-top-color:#7c3aed;background:#faf5ff;}
-  .dash-card-label{font-size:11px;color:var(--gray-500);margin-bottom:6px;line-height:1.35;}
-  .dash-card.red .dash-card-label{color:#991b1b;}
-  .dash-card-count{font-size:30px;font-weight:300;font-family:'DM Mono',monospace;color:var(--gray-900);}
-  .dash-card.orange .dash-card-count{color:var(--orange);}
-  .dash-card.blue .dash-card-count{color:#1d4ed8;}
-  .dash-card.red .dash-card-count{color:var(--red);}
-  .dash-card.amber .dash-card-count{color:var(--amber);}
-  .dash-card.green .dash-card-count{color:var(--green);}
-  .dash-card.sold .dash-card-count{color:#7c3aed;}
+/* BADGES */
+.badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;white-space:nowrap;}
+.badge-s{background:var(--scotland-bg);color:var(--scotland-text);border:1px solid var(--scotland-border);}
+.badge-m{background:var(--mallard-bg);color:var(--mallard-text);border:1px solid var(--mallard-border);}
+.badge-ok{background:var(--green-light);color:#166534;}
+.badge-warn{background:var(--amber-light);color:#92400e;}
+.badge-red{background:var(--red-light);color:#991b1b;}
+.badge-gray{background:var(--gray-100);color:var(--gray-600);}
+.badge-sold{background:var(--purple-light);color:var(--purple);}
+.badge-ag{background:#dcfce7;color:#166534;}
+.age-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:4px;vertical-align:middle;}
+.age-dot.ok{background:var(--green);}
+.age-dot.warn{background:var(--amber);}
+.age-dot.red{background:var(--red);}
+.age-dot.gray{background:var(--gray-400);}
 
-  /* Recently sold mini list */
-  .sold-list{margin-top:8px;}
-  .sold-item{background:white;border:1px solid #e9d5ff;border-radius:var(--radius);padding:8px 12px;margin-bottom:6px;display:flex;align-items:center;gap:10px;font-size:12px;}
-  .sold-item-name{font-weight:500;color:var(--gray-900);flex:1;}
-  .sold-item-date{font-size:11px;color:var(--gray-400);}
-  .sold-badge{background:#f3e8ff;color:#7c3aed;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;}
+/* UNIT DETAIL */
+.detail-wrap{max-width:720px;}
+.detail-photo-main{width:100%;height:240px;background:var(--gray-100);border-radius:var(--radius-lg);overflow:hidden;position:relative;margin-bottom:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;border:2px dashed var(--gray-300);transition:border-color 0.15s;}
+.detail-photo-main.has-photo{border:none;}
+.detail-photo-main:hover{border-color:var(--orange);}
+.detail-photo-main img{width:100%;height:100%;object-fit:cover;}
+.photo-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.15s;}
+.detail-photo-main:hover .photo-overlay{opacity:1;}
+.photo-overlay-inner{color:white;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px;}
+.no-photo-placeholder{display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--gray-400);}
+.no-photo-placeholder svg{width:40px;height:40px;}
+.no-photo-placeholder span{font-size:13px;}
 
-  /* ── LIST / TABLE ── */
-  .list-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
-  .back-btn{background:none;border:none;cursor:pointer;color:var(--gray-500);padding:4px;display:flex;align-items:center;border-radius:6px;transition:color 0.15s;}
-  .back-btn:hover{color:var(--orange);}
-  .back-btn svg{width:18px;height:18px;}
-  .list-title{font-size:16px;font-weight:600;color:var(--gray-900);}
-  .list-count{margin-left:auto;font-size:12px;color:var(--gray-500);background:var(--gray-100);padding:3px 10px;border-radius:20px;}
-  .search-wrap{position:relative;margin-bottom:10px;}
-  .search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--gray-400);}
-  .search-input{width:100%;padding:8px 10px 8px 30px;border-radius:var(--radius);border:1px solid var(--gray-200);background:white;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--gray-900);}
-  .search-input:focus{outline:none;border-color:var(--orange);}
+/* PHOTO STRIP */
+.photo-strip{display:flex;gap:8px;overflow-x:auto;padding:4px 0 8px;margin-bottom:10px;}
+.photo-strip::-webkit-scrollbar{height:4px;}
+.photo-strip::-webkit-scrollbar-track{background:var(--gray-100);border-radius:2px;}
+.photo-strip::-webkit-scrollbar-thumb{background:var(--orange);border-radius:2px;}
+.strip-thumb{width:68px;height:52px;border-radius:6px;overflow:hidden;flex-shrink:0;cursor:pointer;border:2px solid transparent;transition:border-color 0.15s;background:var(--gray-100);display:flex;align-items:center;justify-content:center;}
+.strip-thumb.active{border-color:var(--orange);}
+.strip-thumb img{width:100%;height:100%;object-fit:cover;}
+.strip-add{width:68px;height:52px;border-radius:6px;flex-shrink:0;cursor:pointer;border:2px dashed var(--gray-300);display:flex;align-items:center;justify-content:center;color:var(--gray-400);font-size:22px;transition:border-color 0.15s,color 0.15s;background:white;}
+.strip-add:hover{border-color:var(--orange);color:var(--orange);}
 
-  .table-wrap{overflow-x:auto;border-radius:var(--radius-lg);border:1px solid var(--gray-200);background:white;}
-  table{width:100%;border-collapse:collapse;font-size:12px;}
-  thead tr{background:var(--black);}
-  thead th{padding:9px 10px;text-align:left;font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--gray-400);white-space:nowrap;border-right:1px solid var(--black-3);cursor:pointer;user-select:none;position:relative;}
-  thead th:last-child{border-right:none;}
-  thead th:hover{color:white;}
-  .sort-arrow{margin-left:4px;opacity:0.4;font-size:9px;}
-  .sort-arrow.active{opacity:1;color:var(--orange);}
-  tbody tr{border-bottom:1px solid var(--gray-100);cursor:pointer;transition:background 0.1s;}
-  tbody tr:last-child{border-bottom:none;}
-  tbody tr:hover{background:var(--orange-light);}
-  tbody tr.sold-row{opacity:0.5;background:#faf5ff;}
-  tbody td{padding:8px 10px;color:var(--gray-700);white-space:nowrap;border-right:1px solid var(--gray-100);}
-  tbody td:last-child{border-right:none;}
-  .td-mono{font-family:'DM Mono',monospace;font-size:11px;color:var(--gray-500);}
-  .td-bold{font-weight:500;color:var(--gray-900);}
-  .td-right{text-align:right;font-family:'DM Mono',monospace;}
+.detail-card{background:white;border:1px solid var(--gray-200);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:12px;}
+.detail-card-header{background:var(--black);padding:12px 16px;display:flex;align-items:center;gap:10px;}
+.detail-card-title{font-size:15px;font-weight:600;color:white;flex:1;}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;}
+.detail-field{padding:10px 16px;border-right:1px solid var(--gray-100);border-bottom:1px solid var(--gray-100);}
+.detail-field:nth-child(even){border-right:none;}
+.detail-field.full{grid-column:1/-1;border-right:none;}
+.detail-field label{font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--orange);display:block;margin-bottom:2px;}
+.detail-field span{font-size:13px;color:var(--gray-900);font-weight:500;}
+.detail-field.mono span{font-family:'DM Mono',monospace;font-size:11px;}
 
-  /* ── BADGES ── */
-  .badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;white-space:nowrap;}
-  .badge-s{background:var(--scotland-bg);color:var(--scotland-text);border:1px solid var(--scotland-border);}
-  .badge-m{background:var(--mallard-bg);color:var(--mallard-text);border:1px solid var(--mallard-border);}
-  .badge-ok{background:var(--green-light);color:#166534;}
-  .badge-warn{background:var(--amber-light);color:#92400e;}
-  .badge-red{background:var(--red-light);color:#991b1b;}
-  .badge-gray{background:var(--gray-100);color:var(--gray-600);}
-  .badge-sold{background:#f3e8ff;color:#7c3aed;}
-  .age-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:4px;vertical-align:middle;}
-  .age-dot.ok{background:var(--green);}
-  .age-dot.warn{background:var(--amber);}
-  .age-dot.red{background:var(--red);}
-  .age-dot.gray{background:var(--gray-400);}
+.btn-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px;}
+.upload-btn{padding:10px;background:var(--orange);color:white;border:none;border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:background 0.15s;}
+.upload-btn:hover{background:var(--orange-dark);}
+.camera-btn{padding:10px;background:var(--black);color:white;border:1px solid var(--black-3);border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:background 0.15s;}
+.camera-btn:hover{background:var(--black-3);}
+.sell-btn{padding:10px;background:white;color:var(--purple);border:1.5px solid #c4b5fd;border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:background 0.15s;grid-column:1/-1;}
+.sell-btn:hover{background:var(--purple-light);}
+.unsell-btn{padding:10px;background:var(--purple-light);color:var(--purple);border:1.5px solid #c4b5fd;border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;grid-column:1/-1;}
+.agdealer-btn{padding:10px;background:#1a6b3c;color:white;border:none;border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:background 0.15s;grid-column:1/-1;}
+.agdealer-btn:hover{background:#155c33;}
+.posted-toggle{padding:10px;background:white;color:#166534;border:1.5px solid #86efac;border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:background 0.15s;grid-column:1/-1;}
+.posted-toggle.is-posted{background:#dcfce7;}
+.posted-toggle:hover{background:#dcfce7;}
 
-  /* ── UNIT DETAIL ── */
-  .detail-wrap{max-width:680px;}
-  .detail-photo-area{width:100%;height:240px;background:var(--gray-100);border-radius:var(--radius-lg);overflow:hidden;position:relative;margin-bottom:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;border:2px dashed var(--gray-300);transition:border-color 0.15s;}
-  .detail-photo-area.has-photo{border:none;}
-  .detail-photo-area:hover{border-color:var(--orange);}
-  .detail-photo-area img{width:100%;height:100%;object-fit:cover;}
-  .photo-overlay{position:absolute;inset:0;background:rgba(0,0,0,0.4);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.15s;}
-  .detail-photo-area:hover .photo-overlay{opacity:1;}
-  .photo-overlay-inner{color:white;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px;}
-  .no-photo-placeholder{display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--gray-400);}
-  .no-photo-placeholder svg{width:40px;height:40px;}
-  .no-photo-placeholder span{font-size:13px;}
+/* AGDEALER PANEL */
+.ag-panel{background:white;border:1px solid #86efac;border-radius:var(--radius-lg);padding:16px;margin-top:12px;}
+.ag-panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.ag-panel-title{font-size:13px;font-weight:700;color:#166534;display:flex;align-items:center;gap:6px;}
+.ag-open-btn{background:#1a6b3c;color:white;border:none;border-radius:6px;padding:6px 12px;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.ag-row{display:flex;align-items:center;border-bottom:1px solid var(--gray-100);padding:7px 0;}
+.ag-row:last-child{border-bottom:none;}
+.ag-field{font-size:11px;font-weight:600;color:var(--gray-500);width:130px;flex-shrink:0;text-transform:uppercase;letter-spacing:0.04em;}
+.ag-value{font-size:12px;color:var(--gray-900);flex:1;font-weight:500;}
+.ag-copy{background:none;border:1px solid var(--gray-200);border-radius:5px;padding:3px 10px;font-size:10px;font-weight:600;cursor:pointer;color:var(--gray-600);font-family:'DM Sans',sans-serif;transition:background 0.1s,color 0.1s;white-space:nowrap;}
+.ag-copy:hover{background:var(--orange);color:white;border-color:var(--orange);}
+.ag-copy.copied{background:var(--green);color:white;border-color:var(--green);}
 
-  .detail-card{background:white;border:1px solid var(--gray-200);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:12px;}
-  .detail-card-header{background:var(--black);padding:12px 16px;display:flex;align-items:center;gap:10px;}
-  .detail-card-title{font-size:15px;font-weight:600;color:white;flex:1;}
-  .detail-grid{display:grid;grid-template-columns:1fr 1fr;}
-  .detail-field{padding:10px 16px;border-right:1px solid var(--gray-100);border-bottom:1px solid var(--gray-100);}
-  .detail-field:nth-child(even){border-right:none;}
-  .detail-field.full{grid-column:1/-1;border-right:none;}
-  .detail-field label{font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--orange);display:block;margin-bottom:2px;}
-  .detail-field span{font-size:13px;color:var(--gray-900);font-weight:500;}
-  .detail-field.mono span{font-family:'DM Mono',monospace;font-size:11px;}
+/* PICTURE CATALOGUE */
+.pic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px;}
+.pic-card{background:white;border:1px solid var(--gray-200);border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;transition:box-shadow 0.15s,border-color 0.15s;}
+.pic-card:hover{box-shadow:var(--shadow);border-color:var(--orange);}
+.pic-img{width:100%;height:118px;background:var(--gray-100);display:flex;align-items:center;justify-content:center;color:var(--gray-400);font-size:28px;overflow:hidden;}
+.pic-img img{width:100%;height:100%;object-fit:cover;}
+.pic-body{padding:8px 10px;border-top:1px solid var(--gray-100);}
+.pic-stock{font-size:10px;color:var(--gray-400);font-family:'DM Mono',monospace;}
+.pic-name{font-size:12px;font-weight:600;color:var(--gray-900);margin-top:1px;}
+.pic-price{font-size:11px;color:var(--gray-500);margin-top:2px;}
 
-  .btn-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px;}
-  .upload-btn{padding:11px;background:var(--orange);color:white;border:none;border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:background 0.15s;}
-  .upload-btn:hover{background:var(--orange-dark);}
-  .camera-btn{padding:11px;background:var(--black);color:white;border:1px solid var(--black-3);border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:background 0.15s;}
-  .camera-btn:hover{background:var(--black-3);}
-  .sell-btn{padding:11px;background:white;color:#7c3aed;border:1.5px solid #c4b5fd;border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:background 0.15s;grid-column:1/-1;}
-  .sell-btn:hover{background:#faf5ff;}
-  .unsell-btn{padding:11px;background:#f3e8ff;color:#7c3aed;border:1.5px solid #c4b5fd;border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:background 0.15s;grid-column:1/-1;}
-
-  /* ── PICTURE CATALOGUE ── */
-  .pic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px;}
-  .pic-card{background:white;border:1px solid var(--gray-200);border-radius:var(--radius-lg);overflow:hidden;cursor:pointer;transition:box-shadow 0.15s,border-color 0.15s;}
-  .pic-card:hover{box-shadow:var(--shadow);border-color:var(--orange);}
-  .pic-img{width:100%;height:118px;background:var(--gray-100);display:flex;align-items:center;justify-content:center;color:var(--gray-400);font-size:28px;overflow:hidden;}
-  .pic-img img{width:100%;height:100%;object-fit:cover;}
-  .pic-body{padding:8px 10px;border-top:1px solid var(--gray-100);}
-  .pic-stock{font-size:10px;color:var(--gray-400);font-family:'DM Mono',monospace;}
-  .pic-name{font-size:12px;font-weight:600;color:var(--gray-900);margin-top:1px;}
-  .pic-price{font-size:11px;color:var(--gray-500);margin-top:2px;}
-
-  /* ── TOAST ── */
-  #toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--black);color:white;padding:9px 18px;border-radius:20px;font-size:13px;font-weight:500;z-index:200;opacity:0;transition:opacity 0.2s;pointer-events:none;white-space:nowrap;border:1px solid var(--orange);}
-  #toast.show{opacity:1;}
-  .spinner{width:14px;height:14px;border:2px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin 0.7s linear infinite;display:inline-block;}
-  @keyframes spin{to{transform:rotate(360deg);}}
-  .empty-state{text-align:center;padding:48px 20px;color:var(--gray-400);font-size:13px;}
+/* TOAST */
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--black);color:white;padding:9px 18px;border-radius:20px;font-size:13px;font-weight:500;z-index:200;opacity:0;transition:opacity 0.2s;pointer-events:none;white-space:nowrap;border:1px solid var(--orange);}
+#toast.show{opacity:1;}
+.spinner{width:14px;height:14px;border:2px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin 0.7s linear infinite;display:inline-block;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.empty-state{text-align:center;padding:48px 20px;color:var(--gray-400);font-size:13px;}
 </style>
 </head>
 <body>
@@ -210,7 +250,7 @@
 <div id="auth-screen">
   <div class="auth-card">
     <div class="auth-logo">
-      <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" width="30" height="30">
+      <svg viewBox="0 0 36 36" fill="none" width="30" height="30">
         <circle cx="11" cy="26" r="8" fill="#fff" opacity="0.9"/><circle cx="11" cy="26" r="4" fill="#e85d04"/>
         <circle cx="27" cy="27" r="5" fill="#fff" opacity="0.9"/><circle cx="27" cy="27" r="2" fill="#e85d04"/>
         <rect x="10" y="19" width="18" height="7" rx="1.5" fill="#fff" opacity="0.95"/>
@@ -244,75 +284,56 @@
           <rect x="22" y="10" width="2.5" height="7" rx="1" fill="#fff" opacity="0.8"/>
         </svg>
       </div>
-      <div class="topbar-title">Hyde Park Equipment
-        <span id="topbar-sub">Used Equipment Tracker</span>
-      </div>
+      <div class="topbar-title">Hyde Park Equipment<span id="topbar-sub">Used Equipment Tracker</span></div>
     </div>
     <div class="topbar-right">
       <button class="sync-btn" id="sync-btn" onclick="syncFromDrive()">
-        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
-        Sync
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>Sync
       </button>
       <div class="user-avatar" id="user-avatar" onclick="signOut()"></div>
     </div>
   </div>
-
   <div class="app-body">
-    <!-- Sidebar (desktop) -->
     <nav class="sidenav">
       <button class="nav-btn active" id="nav-dashboard" onclick="navigate('dashboard')">
-        <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-        Dashboard
+        <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dashboard
       </button>
       <button class="nav-btn" id="nav-list" onclick="navigate('list','all')">
-        <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="3" cy="6" r="1" fill="currentColor"/><circle cx="3" cy="12" r="1" fill="currentColor"/><circle cx="3" cy="18" r="1" fill="currentColor"/></svg>
-        Full List
+        <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="3" cy="6" r="1" fill="currentColor"/><circle cx="3" cy="12" r="1" fill="currentColor"/><circle cx="3" cy="18" r="1" fill="currentColor"/></svg>Full List
       </button>
       <button class="nav-btn" id="nav-scotland" onclick="navigate('list','S')">
-        <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-        Scotland
+        <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Scotland
       </button>
       <button class="nav-btn" id="nav-mallard" onclick="navigate('list','M')">
-        <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-        Mallard
+        <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Mallard
       </button>
       <button class="nav-btn" id="nav-pictures" onclick="navigate('pictures')">
-        <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-        Pictures
+        <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>Pictures
       </button>
     </nav>
-
-    <!-- Main -->
     <div class="main-content" id="content"></div>
   </div>
-
-  <!-- Bottom nav (mobile) -->
   <nav class="bottomnav">
     <button class="nav-btn active" id="bnav-dashboard" onclick="navigate('dashboard')">
-      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-      Dashboard
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Dashboard
     </button>
     <button class="nav-btn" id="bnav-list" onclick="navigate('list','all')">
-      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="3" cy="6" r="1" fill="currentColor"/></svg>
-      Full List
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="3" cy="6" r="1" fill="currentColor"/></svg>Full List
     </button>
     <button class="nav-btn" id="bnav-scotland" onclick="navigate('list','S')">
-      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-      Scotland
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Scotland
     </button>
     <button class="nav-btn" id="bnav-mallard" onclick="navigate('list','M')">
-      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-      Mallard
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Mallard
     </button>
     <button class="nav-btn" id="bnav-pictures" onclick="navigate('pictures')">
-      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-      Pictures
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>Pictures
     </button>
   </nav>
 </div>
 
 <div id="toast"></div>
-<input type="file" id="photo-input" accept="image/*" style="display:none">
+<input type="file" id="photo-input" accept="image/*" multiple style="display:none">
 <input type="file" id="camera-input" accept="image/*" capture="environment" style="display:none">
 
 <script>
@@ -322,12 +343,14 @@ const SHARED_DRIVE_NAME='Used Equipment Tracker';
 const INVENTORY_FOLDER_NAME='Used Equipment Data';
 const PHOTOS_FOLDER_NAME='Used Equipment Photos';
 
-let inventory=[],photoMap={},photoBlobMap={},soldUnits={};
+let inventory=[],photoMap={},photoBlobMap={},soldUnits={},postedUnits={};
 let currentView='dashboard',currentLocFilter='all';
-let listFilterType=null,listFilterVal=null,selectedStock=null;
+let listFilterType=null,listFilterVal=null,selectedStock=null,activePhotoIdx=0;
 let tokenClient=null,accessToken=null,userInfo=null;
 let sharedDriveId=null,inventoryFolderId=null,photosFolderId=null;
 let sortCol=null,sortDir=1;
+
+// photoMap[stock] = array of {id, name} sorted by number suffix
 
 // ── AUTH ──
 function initGoogleAuth(){
@@ -335,8 +358,7 @@ function initGoogleAuth(){
     client_id:CLIENT_ID,scope:SCOPES,
     callback:async(resp)=>{
       if(resp.error){showToast('Sign in failed: '+(resp.error_description||resp.error));return;}
-      accessToken=resp.access_token;
-      await loadUserInfo();showApp();
+      accessToken=resp.access_token;await loadUserInfo();showApp();
     }
   });
 }
@@ -344,7 +366,7 @@ function signIn(){tokenClient.requestAccessToken({prompt:'consent',include_grant
 function signOut(){
   if(!confirm('Sign out?'))return;
   google.accounts.oauth2.revoke(accessToken,()=>{});
-  accessToken=null;userInfo=null;inventory=[];photoMap={};photoBlobMap={};soldUnits={};
+  accessToken=null;userInfo=null;inventory=[];photoMap={};photoBlobMap={};soldUnits={};postedUnits={};
   document.getElementById('auth-screen').style.display='flex';
   document.getElementById('app').style.display='none';
 }
@@ -357,17 +379,15 @@ async function loadUserInfo(){
 }
 function showApp(){
   document.getElementById('auth-screen').style.display='none';
-  const app=document.getElementById('app');
-  app.style.display='block';
-  // Load sold from localStorage
+  const app=document.getElementById('app');app.style.display='block';
   try{soldUnits=JSON.parse(localStorage.getItem('soldUnits')||'{}');}catch(e){soldUnits={};}
+  try{postedUnits=JSON.parse(localStorage.getItem('postedUnits')||'{}');}catch(e){postedUnits={};}
   navigate('dashboard');syncFromDrive();
 }
 
 // ── DRIVE ──
 async function gfetch(url,opts={}){
-  opts.headers=opts.headers||{};
-  opts.headers['Authorization']='Bearer '+accessToken;
+  opts.headers=opts.headers||{};opts.headers['Authorization']='Bearer '+accessToken;
   return fetch(url,opts);
 }
 async function findSharedDrive(){
@@ -439,40 +459,118 @@ async function parseExcelBlob(blob){
   });
 }
 async function loadPhotoIndex(){
-  photoMap={};let pageToken=null;
+  // photoMap[stock] = sorted array of {id, name, num}
+  const tempMap={};
+  let pageToken=null;
   do{
     const params=new URLSearchParams({q:`'${photosFolderId}' in parents and trashed=false`,fields:'nextPageToken,files(id,name)',pageSize:'1000',supportsAllDrives:'true',includeItemsFromAllDrives:'true',...(sharedDriveId?{driveId:sharedDriveId,corpora:'drive'}:{}),...(pageToken?{pageToken}:{})});
     const r=await gfetch(`https://www.googleapis.com/drive/v3/files?${params}`);
     const data=await r.json();
-    if(data.files)data.files.forEach(f=>{photoMap[f.name.replace(/\.[^/.]+$/,'').split('_')[0]]=f.id;});
+    if(data.files){
+      data.files.forEach(f=>{
+        const base=f.name.replace(/\.[^/.]+$/,'');
+        const parts=base.split('_');
+        const stock=parts[0];
+        const num=parseInt(parts[parts.length-1])||1;
+        if(!tempMap[stock])tempMap[stock]=[];
+        tempMap[stock].push({id:f.id,name:f.name,num});
+      });
+    }
     pageToken=data.nextPageToken;
   }while(pageToken);
+  // Sort each stock's photos by number
+  photoMap={};
+  Object.keys(tempMap).forEach(stock=>{
+    photoMap[stock]=tempMap[stock].sort((a,b)=>a.num-b.num);
+  });
 }
-async function getPhotoUrl(stock){
-  if(photoBlobMap[stock])return photoBlobMap[stock];
-  if(!photoMap[stock])return null;
+async function getPhotoUrl(fileId){
+  if(photoBlobMap[fileId])return photoBlobMap[fileId];
   try{
-    const r=await gfetch(`https://www.googleapis.com/drive/v3/files/${photoMap[stock]}?alt=media&supportsAllDrives=true`);
+    const r=await gfetch(`https://www.googleapis.com/drive/v3/files/${fileId}?alt=media&supportsAllDrives=true`);
     const blob=await r.blob();const url=URL.createObjectURL(blob);
-    photoBlobMap[stock]=url;return url;
+    photoBlobMap[fileId]=url;return url;
   }catch(e){return null;}
 }
-async function uploadPhoto(stock,model,file){
-  showToast('Uploading...');
+function nextPhotoNum(stock){
+  if(!photoMap[stock]||photoMap[stock].length===0)return 1;
+  const nums=photoMap[stock].map(p=>p.num);
+  return Math.max(...nums)+1;
+}
+// Compress image to under 2.4MB, preserving quality as much as possible
+async function compressImage(file){
+  const MAX_BYTES = 2.4 * 1024 * 1024;
+  if(file.size <= MAX_BYTES) return file; // already small enough
+  return new Promise(resolve=>{
+    const img=new Image();
+    const url=URL.createObjectURL(file);
+    img.onload=()=>{
+      URL.revokeObjectURL(url);
+      const canvas=document.createElement('canvas');
+      let w=img.width,h=img.height;
+      // Scale down if very large (max 3000px on longest side)
+      const maxDim=3000;
+      if(w>maxDim||h>maxDim){
+        if(w>h){h=Math.round(h*maxDim/w);w=maxDim;}
+        else{w=Math.round(w*maxDim/h);h=maxDim;}
+      }
+      canvas.width=w;canvas.height=h;
+      const ctx=canvas.getContext('2d');
+      ctx.drawImage(img,0,0,w,h);
+      // Binary search for the right quality level
+      let lo=0.3,hi=0.95,bestBlob=null;
+      function tryQuality(q){
+        return new Promise(res=>{
+          canvas.toBlob(blob=>{res(blob);},'image/jpeg',q);
+        });
+      }
+      async function binarySearch(){
+        for(let i=0;i<8;i++){
+          const mid=(lo+hi)/2;
+          const blob=await tryQuality(mid);
+          if(!blob)break;
+          if(blob.size<=MAX_BYTES){bestBlob=blob;lo=mid;}
+          else{hi=mid;}
+          if(hi-lo<0.02)break;
+        }
+        if(!bestBlob){bestBlob=await tryQuality(lo);}
+        resolve(new File([bestBlob],file.name.replace(/\.[^.]+$/,'.jpg'),{type:'image/jpeg'}));
+      }
+      binarySearch();
+    };
+    img.onerror=()=>{resolve(file);}; // fallback: use original
+    img.src=url;
+  });
+}
+
+async function uploadPhotos(stock,model,files){
   const today=new Date().toISOString().split('T')[0];
   const cleanModel=(model||'unknown').replace(/[^a-zA-Z0-9]/g,'');
-  const ext=file.name.split('.').pop();
-  const filename=`${stock}_${cleanModel}_${today}.${ext}`;
-  const meta={name:filename,parents:[photosFolderId]};
-  const form=new FormData();
-  form.append('metadata',new Blob([JSON.stringify(meta)],{type:'application/json'}));
-  form.append('file',file);
-  const r=await gfetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&supportsAllDrives=true',{method:'POST',body:form});
-  const data=await r.json();
-  if(data.id){
-    if(photoBlobMap[stock]){URL.revokeObjectURL(photoBlobMap[stock]);delete photoBlobMap[stock];}
-    photoMap[stock]=data.id;showToast('✓ Saved: '+filename);render();
-  }else{showToast('Upload failed: '+(data.error?.message||'unknown'),4000);}
+  let nextNum=nextPhotoNum(stock);
+  const maxAllowed=10-(photoMap[stock]?photoMap[stock].length:0);
+  const toUpload=Array.from(files).slice(0,Math.max(0,maxAllowed));
+  if(toUpload.length===0){showToast('Max 10 photos per unit',3000);return;}
+  showToast('Processing '+toUpload.length+' photo'+(toUpload.length>1?'s':'')+'...',10000);
+  let uploaded=0;
+  for(const file of toUpload){
+    // Compress to under 2.4MB
+    const compressed=await compressImage(file);
+    const sizeMB=(compressed.size/1024/1024).toFixed(1);
+    const filename=`${stock}_${cleanModel}_${today}_${nextNum}.jpg`;
+    const meta={name:filename,parents:[photosFolderId]};
+    const form=new FormData();
+    form.append('metadata',new Blob([JSON.stringify(meta)],{type:'application/json'}));
+    form.append('file',compressed);
+    const r=await gfetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&supportsAllDrives=true',{method:'POST',body:form});
+    const data=await r.json();
+    if(data.id){
+      if(!photoMap[stock])photoMap[stock]=[];
+      photoMap[stock].push({id:data.id,name:filename,num:nextNum});
+      nextNum++;uploaded++;
+    }
+  }
+  showToast('✓ '+uploaded+' photo'+(uploaded>1?'s':'')+' saved (max 2.4MB each)');
+  render();
 }
 
 // ── PARSING ──
@@ -519,46 +617,51 @@ function ageInfo(days){
 }
 function fmt(n){return n?'$'+Number(n).toLocaleString():'—';}
 function fmtH(n){return n?Number(n).toLocaleString():'—';}
+function fmtM(n){
+  if(!n||n===0)return'$0';
+  const abs=Math.abs(n);
+  if(abs>=1000000)return(n<0?'-':'')+'$'+(abs/1000000).toFixed(2)+'M';
+  if(abs>=1000)return(n<0?'-':'')+'$'+(abs/1000).toFixed(0)+'k';
+  return'$'+Math.round(n).toLocaleString();
+}
 function showToast(msg,dur=2500){
   const t=document.getElementById('toast');
   t.textContent=msg;t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),dur);
 }
 function saveSold(){try{localStorage.setItem('soldUnits',JSON.stringify(soldUnits));}catch(e){}}
+function savePosted(){try{localStorage.setItem('postedUnits',JSON.stringify(postedUnits));}catch(e){}}
 
 // ── NAV ──
 function setActiveNav(view,loc){
-  const map={dashboard:'dashboard',pictures:'pictures'};
   let key=view==='list'?(loc==='S'?'scotland':loc==='M'?'mallard':'list'):view;
   ['dashboard','list','scotland','mallard','pictures'].forEach(k=>{
-    const s=document.getElementById('nav-'+k);
-    const b=document.getElementById('bnav-'+k);
-    if(s)s.classList.remove('active');
-    if(b)b.classList.remove('active');
+    const s=document.getElementById('nav-'+k);const b=document.getElementById('bnav-'+k);
+    if(s)s.classList.remove('active');if(b)b.classList.remove('active');
   });
-  const s=document.getElementById('nav-'+key);
-  const b=document.getElementById('bnav-'+key);
-  if(s)s.classList.add('active');
-  if(b)b.classList.add('active');
+  const s=document.getElementById('nav-'+key);const b=document.getElementById('bnav-'+key);
+  if(s)s.classList.add('active');if(b)b.classList.add('active');
 }
 function navigate(view,loc,ft,fv){
   currentView=view;currentLocFilter=loc||'all';
-  listFilterType=ft||null;listFilterVal=fv||null;selectedStock=null;
+  listFilterType=ft||null;listFilterVal=fv||null;selectedStock=null;activePhotoIdx=0;
   setActiveNav(view,loc);render();
 }
-function openUnit(stock){selectedStock=stock;render();}
+function openUnit(stock){selectedStock=stock;activePhotoIdx=0;render();}
 
-// ── MARK SOLD ──
+// ── SOLD / POSTED ──
 function markSold(stock){
-  const u=inventory.find(x=>x.stock===stock);
-  if(!u)return;
-  if(confirm('Mark '+u.year+' '+u.make+' '+u.model+' ('+stock+') as sold?')){
+  const u=inventory.find(x=>x.stock===stock);if(!u)return;
+  if(confirm('Mark '+u.year+' '+u.make+' '+u.model+' as sold?')){
     soldUnits[stock]={stock,name:u.year+' '+u.make+' '+u.model,date:new Date().toLocaleDateString()};
     saveSold();showToast('✓ Marked as sold');render();
   }
 }
-function unmarkSold(stock){
-  delete soldUnits[stock];saveSold();showToast('Marked as available');render();
+function unmarkSold(stock){delete soldUnits[stock];saveSold();showToast('Marked as available');render();}
+function togglePosted(stock){
+  if(postedUnits[stock])delete postedUnits[stock];
+  else postedUnits[stock]=new Date().toLocaleDateString();
+  savePosted();render();
 }
 
 // ── SORT ──
@@ -568,11 +671,47 @@ function sortBy(col){
 }
 function sortData(data){
   if(!sortCol)return data;
-  return [...data].sort((a,b)=>{
+  return[...data].sort((a,b)=>{
     let av=a[sortCol]??'',bv=b[sortCol]??'';
     if(typeof av==='number'&&typeof bv==='number')return(av-bv)*sortDir;
     return String(av).localeCompare(String(bv))*sortDir;
   });
+}
+
+// ── FINANCIAL HELPERS ──
+function dialSVG(pct){
+  pct=Math.round(Math.max(0,Math.min(100,pct)));
+  const R=52,cx=65,cy=62;
+  function pt(deg){const rad=(deg-180)*Math.PI/180;return{x:cx+R*Math.cos(rad),y:cy+R*Math.sin(rad)};}
+  const startDeg=0,endDeg=180;
+  const splitDeg=pct*1.8; // 0-180 range
+  const s=pt(startDeg),split=pt(splitDeg),e=pt(endDeg);
+  const gLarge=splitDeg>90?1:0;
+  const rLarge=(180-splitDeg)>90?1:0;
+  const color=pct>50?'#dc2626':pct>25?'#d97706':'#16a34a';
+  let greenArc='',redArc='';
+  if(pct>0&&pct<100){
+    greenArc=`<path d="M ${s.x.toFixed(1)} ${s.y.toFixed(1)} A ${R} ${R} 0 ${gLarge} 1 ${split.x.toFixed(1)} ${split.y.toFixed(1)}" fill="none" stroke="#16a34a" stroke-width="13" stroke-linecap="butt"/>`;
+    redArc=`<path d="M ${split.x.toFixed(1)} ${split.y.toFixed(1)} A ${R} ${R} 0 ${rLarge} 1 ${e.x.toFixed(1)} ${e.y.toFixed(1)}" fill="none" stroke="#dc2626" stroke-width="13" stroke-linecap="butt"/>`;
+  }else if(pct===0){
+    greenArc=`<path d="M ${s.x.toFixed(1)} ${s.y.toFixed(1)} A ${R} ${R} 0 1 1 ${e.x.toFixed(1)} ${e.y.toFixed(1)}" fill="none" stroke="#16a34a" stroke-width="13"/>`;
+  }else{
+    redArc=`<path d="M ${s.x.toFixed(1)} ${s.y.toFixed(1)} A ${R} ${R} 0 1 1 ${e.x.toFixed(1)} ${e.y.toFixed(1)}" fill="none" stroke="#dc2626" stroke-width="13"/>`;
+  }
+  return`<svg viewBox="0 0 130 72" width="130" height="72">
+    <path d="M ${s.x.toFixed(1)} ${s.y.toFixed(1)} A ${R} ${R} 0 1 1 ${e.x.toFixed(1)} ${e.y.toFixed(1)}" fill="none" stroke="#f3f4f6" stroke-width="13"/>
+    ${greenArc}${redArc}
+    <text x="${cx}" y="${cy-8}" text-anchor="middle" font-size="18" font-weight="600" font-family="DM Mono,monospace" fill="${color}">${pct}%</text>
+    <text x="${cx}" y="${cy+8}" text-anchor="middle" font-size="9" fill="#9ca3af">interest bearing</text>
+  </svg>`;
+}
+function barChartHTML(cost,floor,owned,maxVal){
+  const pct=v=>maxVal>0?Math.min(100,Math.round(Math.max(0,v)/maxVal*100)):0;
+  return`<div class="bar-chart">
+    <div class="bar-row"><div class="bar-label">Total Cost <strong>${fmtM(cost)}</strong></div><div class="bar-track"><div class="bar-fill" style="width:${pct(cost)}%;background:#e85d04"></div></div></div>
+    <div class="bar-row"><div class="bar-label">Floor Planned <strong>${fmtM(floor)}</strong></div><div class="bar-track"><div class="bar-fill" style="width:${pct(floor)}%;background:#3b82f6"></div></div></div>
+    <div class="bar-row"><div class="bar-label">Owned Equity <strong>${fmtM(owned)}</strong></div><div class="bar-track"><div class="bar-fill" style="width:${pct(Math.max(0,owned))}%;background:#16a34a"></div></div></div>
+  </div>`;
 }
 
 // ── RENDER ──
@@ -591,27 +730,45 @@ function dc(label,count,color,onclick){
 function renderDashboard(c){
   const active=inventory.filter(u=>!soldUnits[u.stock]);
   const S=active.filter(u=>u.loc==='S'),M=active.filter(u=>u.loc==='M');
-  const noImgS=S.filter(u=>!photoMap[u.stock]);
-  const noImgM=M.filter(u=>!photoMap[u.stock]);
+  const noImgS=S.filter(u=>!photoMap[u.stock]||photoMap[u.stock].length===0);
+  const noImgM=M.filter(u=>!photoMap[u.stock]||photoMap[u.stock].length===0);
   const noPriceS=S.filter(u=>!u.price||u.price===0);
   const noPriceM=M.filter(u=>!u.price||u.price===0);
+  const notPosted=active.filter(u=>photoMap[u.stock]&&photoMap[u.stock].length>0&&!postedUnits[u.stock]);
   const b1=active.filter(u=>daysAgo(u.inDate)<=30);
   const b2=active.filter(u=>{const d=daysAgo(u.inDate);return d>30&&d<=150;});
   const b3=active.filter(u=>{const d=daysAgo(u.inDate);return d>150&&d<=240;});
   const b4=active.filter(u=>{const d=daysAgo(u.inDate);return d>240&&d<=270;});
   const b5=active.filter(u=>{const d=daysAgo(u.inDate);return d>270&&d<=360;});
   const b6=active.filter(u=>daysAgo(u.inDate)>360);
-  const soldList=Object.values(soldUnits).slice(-10).reverse();
+  const soldList=Object.values(soldUnits).slice(-8).reverse();
+
+  // Financial calcs
+  function finStats(units){
+    const totalCost=units.reduce((s,u)=>s+(u.cost||0),0);
+    const totalFloor=units.reduce((s,u)=>s+(u.flooring||0),0);
+    const owned=totalCost-totalFloor;
+    const interestFloor=units.filter(u=>daysAgo(u.inDate)>270).reduce((s,u)=>s+(u.flooring||0),0);
+    const pct=totalFloor>0?Math.round(interestFloor/totalFloor*100):0;
+    return{totalCost,totalFloor,owned,pct};
+  }
+  const fS=finStats(S),fM=finStats(M),fAll=finStats(active);
+  const maxBar=Math.max(fS.totalCost,fM.totalCost,fAll.totalCost,1);
 
   c.innerHTML=`
     <div class="page-header"><div class="page-title">Dashboard</div><div class="page-sub">${active.length} active units</div></div>
 
-    <div class="section-label">By Location</div>
+    <div class="section-label">Used Equipment</div>
     <div class="card-grid">
       ${dc('Scotland',S.length,'orange',"navigate('list','S')")}
       ${dc('Mallard',M.length,'blue',"navigate('list','M')")}
       ${dc('Total Units',active.length,'',"navigate('list','all')")}
+      <div class="dash-card purple" onclick="navigate('list','all','sold','sold')">
+        <div class="dash-card-label">Recently sold</div>
+        <div class="dash-card-count">${Object.keys(soldUnits).length}</div>
+      </div>
     </div>
+    ${soldList.length?`<div class="sold-list">${soldList.map(s=>`<div class="sold-item"><span class="sold-badge">SOLD</span><span class="sold-item-name">${s.name}</span><span class="sold-item-date">${s.date}</span><span class="td-mono" style="font-size:10px">${s.stock}</span></div>`).join('')}</div>`:''}
 
     <div class="section-label">Information Missing</div>
     <div class="card-grid">
@@ -631,33 +788,69 @@ function renderDashboard(c){
       ${dc('Auction — 360+ days',b6.length,b6.length>0?'red':'',"navigate('list','all','age','360+')")}
     </div>
 
-    <div class="section-label">Recently Sold</div>
-    <div class="card-grid" style="margin-bottom:12px">
-      <div class="dash-card sold" onclick="navigate('list','all','sold','sold')">
-        <div class="dash-card-label">Total marked sold</div>
-        <div class="dash-card-count">${Object.keys(soldUnits).length}</div>
+    <div class="section-label">AGDealer</div>
+    <div class="card-grid">
+      ${dc('Not yet posted',notPosted.length,notPosted.length>0?'amber':'green',"navigate('list','all','notposted','notposted')")}
+      ${dc('Posted',Object.keys(postedUnits).length,'agdealer',"navigate('list','all','posted','posted')")}
+    </div>
+
+    <div class="section-label">Financial Details</div>
+    <div class="fin-grid">
+      <div class="fin-card">
+        <div class="fin-card-title">Scotland — Floor Plan Aging</div>
+        ${dialSVG(fS.pct)}
+        <div class="dial-legend">
+          <span><span class="dot" style="background:#16a34a"></span>1–270d</span>
+          <span><span class="dot" style="background:#dc2626"></span>271d+</span>
+        </div>
+        <div style="font-size:10px;color:var(--gray-400);margin-top:4px">Floor plan: ${fmtM(fS.totalFloor)}</div>
+      </div>
+      <div class="fin-card">
+        <div class="fin-card-title">Mallard — Floor Plan Aging</div>
+        ${dialSVG(fM.pct)}
+        <div class="dial-legend">
+          <span><span class="dot" style="background:#16a34a"></span>1–270d</span>
+          <span><span class="dot" style="background:#dc2626"></span>271d+</span>
+        </div>
+        <div style="font-size:10px;color:var(--gray-400);margin-top:4px">Floor plan: ${fmtM(fM.totalFloor)}</div>
+      </div>
+      <div class="fin-card">
+        <div class="fin-card-title">Total — Floor Plan Aging</div>
+        ${dialSVG(fAll.pct)}
+        <div class="dial-legend">
+          <span><span class="dot" style="background:#16a34a"></span>1–270d</span>
+          <span><span class="dot" style="background:#dc2626"></span>271d+</span>
+        </div>
+        <div style="font-size:10px;color:var(--gray-400);margin-top:4px">Floor plan: ${fmtM(fAll.totalFloor)}</div>
+      </div>
+      <div class="fin-card blue-top">
+        <div class="fin-card-title">Scotland — Cost Breakdown</div>
+        ${barChartHTML(fS.totalCost,fS.totalFloor,fS.owned,maxBar)}
+      </div>
+      <div class="fin-card blue-top">
+        <div class="fin-card-title">Mallard — Cost Breakdown</div>
+        ${barChartHTML(fM.totalCost,fM.totalFloor,fM.owned,maxBar)}
+      </div>
+      <div class="fin-card blue-top">
+        <div class="fin-card-title">Total — Cost Breakdown</div>
+        ${barChartHTML(fAll.totalCost,fAll.totalFloor,fAll.owned,maxBar)}
       </div>
     </div>
-    ${soldList.length?`<div class="sold-list">${soldList.map(s=>`
-      <div class="sold-item">
-        <span class="sold-badge">SOLD</span>
-        <span class="sold-item-name">${s.name}</span>
-        <span class="sold-item-date">${s.date}</span>
-        <span class="td-mono" style="font-size:10px">${s.stock}</span>
-      </div>`).join('')}</div>`:'<div style="font-size:12px;color:var(--gray-400);padding:8px 0">No units marked as sold yet</div>'}
   `;
 }
 
 function getFilteredData(){
   let data=currentLocFilter==='all'?inventory:inventory.filter(u=>u.loc===currentLocFilter);
-  if(listFilterType==='nopic')data=data.filter(u=>u.loc===listFilterVal&&!photoMap[u.stock]);
+  if(listFilterType==='nopic')data=data.filter(u=>u.loc===listFilterVal&&(!photoMap[u.stock]||photoMap[u.stock].length===0));
   else if(listFilterType==='noprice')data=data.filter(u=>u.loc===listFilterVal&&(!u.price||u.price===0));
   else if(listFilterType==='sold')data=data.filter(u=>soldUnits[u.stock]);
+  else if(listFilterType==='posted')data=data.filter(u=>postedUnits[u.stock]);
+  else if(listFilterType==='notposted')data=data.filter(u=>photoMap[u.stock]&&photoMap[u.stock].length>0&&!postedUnits[u.stock]);
   else if(listFilterType==='age'){
     if(listFilterVal==='360+')data=data.filter(u=>daysAgo(u.inDate)>360);
     else{const[lo,hi]=listFilterVal.split('-').map(Number);data=data.filter(u=>{const d=daysAgo(u.inDate);return d>=lo&&d<=hi;});}
   }
-  if(listFilterType!=='sold')data=data.filter(u=>!soldUnits[u.stock]);
+  if(!['sold','posted','notposted'].includes(listFilterType))data=data.filter(u=>!soldUnits[u.stock]);
   return data;
 }
 
@@ -668,6 +861,8 @@ function renderList(c){
   if(listFilterType==='nopic')filterLabel=' — Needs Photo';
   if(listFilterType==='noprice')filterLabel=' — No List Price';
   if(listFilterType==='sold')filterLabel=' — Sold';
+  if(listFilterType==='posted')filterLabel=' — Posted on AGDealer';
+  if(listFilterType==='notposted')filterLabel=' — Not Posted';
   if(listFilterType==='age')filterLabel=` — ${listFilterVal} days`;
   c.innerHTML=`
     <div class="list-header">
@@ -705,25 +900,23 @@ function buildTable(data){
   if(!sorted.length)return`<div class="empty-state">No units found</div>`;
   const rows=sorted.map(u=>{
     const days=daysAgo(u.inDate),age=ageInfo(days);
-    const hasPhoto=!!photoMap[u.stock];
+    const photos=photoMap[u.stock]||[];
     const isSold=!!soldUnits[u.stock];
+    const isPosted=!!postedUnits[u.stock];
     const loc=u.loc==='S'?`<span class="badge badge-s">Scotland</span>`:`<span class="badge badge-m">Mallard</span>`;
-    const priceDisplay=u.price?fmt(u.price):`<span style="color:var(--red);font-weight:600">—</span>`;
+    const priceDisplay=u.price?fmt(u.price):`<span style="color:var(--red);font-weight:700">—</span>`;
+    const photoStatus=isSold?'<span class="badge badge-sold">SOLD</span>':
+      photos.length>0?`<span style="color:#16a34a;font-weight:600">✓ ${photos.length}</span>`:
+      '<span style="color:#dc2626;font-weight:600">✗</span>';
+    const agStatus=isPosted?'<span class="badge badge-ag">Posted</span>':'';
     return`<tr onclick="openUnit('${u.stock}')" class="${isSold?'sold-row':''}">
-      <td class="td-mono">${u.stock}</td>
-      <td>${loc}</td>
-      <td>${u.year}</td>
-      <td class="td-bold">${u.make}</td>
-      <td class="td-bold">${u.model}</td>
-      <td>${u.desc}</td>
-      <td class="td-right">${fmtH(u.hours)}</td>
-      <td class="td-mono">${u.serial}</td>
-      <td class="td-right">${priceDisplay}</td>
-      <td class="td-right">${fmt(u.cost)}</td>
-      <td class="td-right">${fmt(u.flooring)}</td>
-      <td class="td-mono">${u.inDate}</td>
+      <td class="td-mono">${u.stock}</td><td>${loc}</td><td>${u.year}</td>
+      <td class="td-bold">${u.make}</td><td class="td-bold">${u.model}</td><td>${u.desc}</td>
+      <td class="td-right">${fmtH(u.hours)}</td><td class="td-mono">${u.serial}</td>
+      <td class="td-right">${priceDisplay}</td><td class="td-right">${fmt(u.cost)}</td>
+      <td class="td-right">${fmt(u.flooring)}</td><td class="td-mono">${u.inDate}</td>
       <td><span class="age-dot ${age.cls}"></span><span class="${age.badge}">${age.label}</span></td>
-      <td>${isSold?'<span class="badge badge-sold">SOLD</span>':hasPhoto?'<span style="color:#16a34a;font-size:13px">✓</span>':'<span style="color:#dc2626;font-size:11px;font-weight:600">✗</span>'}</td>
+      <td>${photoStatus}</td><td>${agStatus}</td>
     </tr>`;
   }).join('');
   return`<div class="table-wrap"><table>
@@ -732,7 +925,7 @@ function buildTable(data){
       ${thSort('make','Make')}${thSort('model','Model')}<th>Description</th>
       ${thSort('hours','Hours')}${thSort('serial','Serial #')}
       ${thSort('price','List Price')}${thSort('cost','Cost')}${thSort('flooring','Flooring')}
-      ${thSort('inDate','In Date')}${thSort('days','Age')}<th>Photo</th>
+      ${thSort('inDate','In Date')}${thSort('days','Age')}<th>Photos</th><th>AG</th>
     </tr></thead>
     <tbody>${rows}</tbody>
   </table></div>`;
@@ -742,30 +935,46 @@ async function renderDetail(c){
   const u=inventory.find(x=>x.stock===selectedStock);
   if(!u){selectedStock=null;render();return;}
   const days=daysAgo(u.inDate),age=ageInfo(days);
-  const hasPhoto=!!photoMap[u.stock];
+  const photos=photoMap[u.stock]||[];
+  const hasPhotos=photos.length>0;
   const isSold=!!soldUnits[u.stock];
+  const isPosted=!!postedUnits[u.stock];
   const loc=u.loc==='S'?`<span class="badge badge-s">Scotland</span>`:`<span class="badge badge-m">Mallard</span>`;
   const today=new Date().toISOString().split('T')[0];
   const cleanModel=(u.model||'').replace(/[^a-zA-Z0-9]/g,'');
-  const previewName=`${u.stock}_${cleanModel}_${today}`;
+  const nextNum=nextPhotoNum(u.stock);
+  const previewName=`${u.stock}_${cleanModel}_${today}_${nextNum}`;
+
+  // Build photo strip
+  const stripHtml=hasPhotos?`
+    <div class="photo-strip" id="photo-strip">
+      ${photos.map((p,i)=>`<div class="strip-thumb ${i===activePhotoIdx?'active':''}" id="thumb-${i}" onclick="switchPhoto(${i})"><img src="" alt="" id="thumb-img-${i}"></div>`).join('')}
+      ${photos.length<10?`<div class="strip-add" onclick="triggerPhotoUpload('${u.stock}','${u.model}')">+</div>`:''}
+    </div>`:'';
+
   c.innerHTML=`
     <div class="detail-wrap">
       <div class="list-header">
         <button class="back-btn" onclick="selectedStock=null;render()"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
         <div class="list-title">${u.year} ${u.make} ${u.model}</div>
         ${loc}${isSold?'<span class="badge badge-sold" style="margin-left:4px">SOLD</span>':''}
+        ${isPosted?'<span class="badge badge-ag" style="margin-left:4px">AGDealer</span>':''}
       </div>
-      <div class="detail-photo-area ${hasPhoto?'has-photo':''}" id="detail-photo-wrap" onclick="triggerPhotoUpload('${u.stock}','${u.model}')">
-        <div class="no-photo-placeholder" id="no-photo-inner" style="${hasPhoto?'display:none':''}">
+
+      <div class="detail-photo-main ${hasPhotos?'has-photo':''}" id="detail-photo-wrap" onclick="${hasPhotos?'':'triggerPhotoUpload(\''+u.stock+'\',\''+u.model+'\')'}">
+        <div class="no-photo-placeholder" id="no-photo-inner" style="${hasPhotos?'display:none':''}">
           <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
           <span>Tap to add photo</span>
         </div>
-        <img id="detail-photo-img" style="${hasPhoto?'':'display:none'}" alt="${u.model}">
+        <img id="detail-photo-img" style="${hasPhotos?'':'display:none'}" alt="${u.model}">
         <div class="photo-overlay"><div class="photo-overlay-inner">
           <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
-          Change photo
+          View / change
         </div></div>
       </div>
+
+      ${stripHtml}
+
       <div class="detail-card">
         <div class="detail-card-header">
           <div class="detail-card-title">${u.stock} — ${u.year} ${u.make} ${u.model}</div>
@@ -785,60 +994,133 @@ async function renderDetail(c){
           <div class="detail-field"><label>Flooring Amount</label><span>${fmt(u.flooring)}</span></div>
           <div class="detail-field"><label>In Date</label><span>${u.inDate}</span></div>
           <div class="detail-field"><label>Days in Stock</label><span><span class="${age.badge}">${days} days</span></span></div>
-          <div class="detail-field full mono"><label>Photo saved as</label><span>${previewName}.jpg</span></div>
+          <div class="detail-field"><label>Photos</label><span>${photos.length} / 10</span></div>
+          <div class="detail-field full mono"><label>Next photo saved as</label><span>${previewName}.jpg</span></div>
         </div>
       </div>
+
       <div class="btn-row">
         <button class="upload-btn" onclick="triggerPhotoUpload('${u.stock}','${u.model}')">
-          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-          ${hasPhoto?'Replace Photo':'Upload Photo'}
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Upload Photo${photos.length<10?' ('+photos.length+'/10)':''}
         </button>
         <button class="camera-btn" onclick="triggerCamera('${u.stock}','${u.model}')">
-          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
           Take Photo
         </button>
+        ${hasPhotos?`<button class="agdealer-btn" onclick="openAGDealer('${u.stock}')">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Post on AGDealer
+        </button>`:''}
+        ${hasPhotos?`<button class="posted-toggle ${isPosted?'is-posted':''}" onclick="togglePosted('${u.stock}')">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          ${isPosted?'✓ Posted on AGDealer':'Mark as Posted'}
+        </button>`:''}
         ${isSold
           ?`<button class="unsell-btn" onclick="unmarkSold('${u.stock}')">↩ Mark as Available</button>`
           :`<button class="sell-btn" onclick="markSold('${u.stock}')">
-              <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
               Mark as Sold
             </button>`
         }
       </div>
+
+      ${hasPhotos?`<div class="ag-panel" id="ag-panel" style="display:none">
+        <div class="ag-panel-header">
+          <div class="ag-panel-title">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            AGDealer Listing Details
+          </div>
+          <button class="ag-open-btn" onclick="window.open('https://www.agdealer.com/admin/listings/listing-add-new.cfm','_blank')">Open AGDealer ↗</button>
+        </div>
+        ${agRow('Stock Number',u.stock)}
+        ${agRow('Year',u.year)}
+        ${agRow('Manufacturer / Make',u.make)}
+        ${agRow('Model',u.model)}
+        ${agRow('Engine Hours',fmtH(u.hours))}
+        ${agRow('Serial Number',u.serial)}
+        ${agRow('Price (CAD)',u.price?u.price.toString():'')}
+        ${agRow('Description / Notes',u.desc)}
+        ${agRow('Location',u.loc==='S'?'Scotland':'Mallard')}
+      </div>`:''}
     </div>`;
-  if(hasPhoto){
-    const url=await getPhotoUrl(u.stock);
-    if(url){
-      const img=document.getElementById('detail-photo-img');
-      if(img)img.src=url;
-      const wrap=document.getElementById('detail-photo-wrap');
-      if(wrap)wrap.classList.add('has-photo');
-      const ph=document.getElementById('no-photo-inner');
-      if(ph)ph.style.display='none';
-    }
+
+  // Load main photo
+  if(hasPhotos){
+    loadMainPhoto(photos[activePhotoIdx].id);
+    // Load strip thumbs
+    photos.forEach(async(p,i)=>{
+      const url=await getPhotoUrl(p.id);
+      const el=document.getElementById('thumb-img-'+i);
+      if(el&&url)el.src=url;
+    });
   }
 }
 
+function agRow(label,value){
+  return`<div class="ag-row">
+    <div class="ag-field">${label}</div>
+    <div class="ag-value">${value||'—'}</div>
+    <button class="ag-copy" onclick="copyField(this,'${String(value).replace(/'/g,"\\'")}')">Copy</button>
+  </div>`;
+}
+
+function copyField(btn,value){
+  navigator.clipboard.writeText(value).then(()=>{
+    btn.textContent='Copied!';btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied');},1500);
+  });
+}
+
+function openAGDealer(stock){
+  window.open('https://www.agdealer.com/admin/listings/listing-add-new.cfm','_blank');
+  const panel=document.getElementById('ag-panel');
+  if(panel)panel.style.display=panel.style.display==='none'?'block':'none';
+}
+
+async function loadMainPhoto(fileId){
+  const url=await getPhotoUrl(fileId);
+  const img=document.getElementById('detail-photo-img');
+  const wrap=document.getElementById('detail-photo-wrap');
+  const ph=document.getElementById('no-photo-inner');
+  if(img&&url){img.src=url;if(wrap)wrap.classList.add('has-photo');if(ph)ph.style.display='none';}
+}
+
+async function switchPhoto(idx){
+  const u=inventory.find(x=>x.stock===selectedStock);if(!u)return;
+  const photos=photoMap[u.stock]||[];if(idx>=photos.length)return;
+  activePhotoIdx=idx;
+  // Update active thumb
+  document.querySelectorAll('.strip-thumb').forEach((el,i)=>{
+    el.classList.toggle('active',i===idx);
+  });
+  loadMainPhoto(photos[idx].id);
+}
+
 function renderPictures(c){
+  const active=inventory.filter(u=>!soldUnits[u.stock]);
   c.innerHTML=`
-    <div class="list-header"><div class="list-title">Picture Catalogue</div><div class="list-count">${inventory.length} units</div></div>
+    <div class="list-header"><div class="list-title">Picture Catalogue</div><div class="list-count">${active.length} units</div></div>
     <div class="pic-grid">
-      ${inventory.filter(u=>!soldUnits[u.stock]).map(u=>`
-        <div class="pic-card" onclick="openUnit('${u.stock}')">
-          <div class="pic-img" id="pic-${u.stock}">📷</div>
+      ${active.map(u=>{
+        const photos=photoMap[u.stock]||[];
+        return`<div class="pic-card" onclick="openUnit('${u.stock}')">
+          <div class="pic-img" id="pic-${u.stock}">${photos.length>0?'':'📷'}</div>
           <div class="pic-body">
-            <div class="pic-stock">${u.stock} · ${u.loc==='S'?'Scotland':'Mallard'}</div>
+            <div class="pic-stock">${u.stock} · ${u.loc==='S'?'Scotland':'Mallard'}${photos.length>1?' · '+photos.length+' photos':''}</div>
             <div class="pic-name">${u.year} ${u.make} ${u.model}</div>
             <div class="pic-price">${fmt(u.price)}</div>
           </div>
-        </div>`).join('')}
+        </div>`;
+      }).join('')}
     </div>`;
-  loadPicThumbs();
+  loadPicThumbs(active);
 }
-async function loadPicThumbs(){
-  for(const u of inventory){
-    if(photoMap[u.stock]){
-      const url=await getPhotoUrl(u.stock);
+async function loadPicThumbs(units){
+  for(const u of units){
+    const photos=photoMap[u.stock]||[];
+    if(photos.length>0){
+      const url=await getPhotoUrl(photos[0].id);
       const el=document.getElementById('pic-'+u.stock);
       if(el&&url)el.innerHTML=`<img src="${url}" alt="${u.model}">`;
     }
@@ -848,28 +1130,23 @@ async function loadPicThumbs(){
 function triggerPhotoUpload(stock,model){
   const inp=document.getElementById('photo-input');
   inp.onchange=async e=>{
-    const file=e.target.files[0];if(!file)return;
-    inp.value='';await uploadPhoto(stock,model,file);
+    const files=e.target.files;if(!files||!files.length)return;
+    inp.value='';await uploadPhotos(stock,model,files);
   };
   inp.click();
 }
 function triggerCamera(stock,model){
   const inp=document.getElementById('camera-input');
   inp.onchange=async e=>{
-    const file=e.target.files[0];if(!file)return;
-    inp.value='';await uploadPhoto(stock,model,file);
+    const files=e.target.files;if(!files||!files.length)return;
+    inp.value='';await uploadPhotos(stock,model,files);
   };
   inp.click();
 }
 
 window.onload=()=>{
-  const s1=document.createElement('script');
-  s1.src='https://accounts.google.com/gsi/client';
-  s1.onload=initGoogleAuth;
-  document.head.appendChild(s1);
-  const s2=document.createElement('script');
-  s2.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
-  document.head.appendChild(s2);
+  const s1=document.createElement('script');s1.src='https://accounts.google.com/gsi/client';s1.onload=initGoogleAuth;document.head.appendChild(s1);
+  const s2=document.createElement('script');s2.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';document.head.appendChild(s2);
 };
 </script>
 </body>
