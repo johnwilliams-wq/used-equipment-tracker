@@ -653,7 +653,8 @@ function openUnit(stock){selectedStock=stock;activePhotoIdx=0;render();}
 function markSold(stock){
   const u=inventory.find(x=>x.stock===stock);if(!u)return;
   if(confirm('Mark '+u.year+' '+u.make+' '+u.model+' as sold?')){
-    soldUnits[stock]={stock,name:u.year+' '+u.make+' '+u.model,date:new Date().toLocaleDateString()};
+    const soldBy=userInfo?(userInfo.name||userInfo.email||'Unknown'):'Unknown';
+    soldUnits[stock]={stock,name:u.year+' '+u.make+' '+u.model,date:new Date().toLocaleDateString(),soldBy};
     saveSold();showToast('✓ Marked as sold');render();
   }
 }
@@ -680,52 +681,28 @@ function sortData(data){
 
 // ── FINANCIAL HELPERS ──
 function dialSVG(pct){
-  // Clean semicircle: left=green (healthy), right=red (interest bearing)
-  // pct = % that is interest bearing (red portion on the RIGHT)
   pct=Math.round(Math.max(0,Math.min(100,pct)));
-  const R=50,cx=65,cy=64,sw=16;
-  // Semicircle goes from left (180deg) to right (0deg) through the top
-  // Green portion: left side, (100-pct)% of arc
-  // Red portion: right side, pct% of arc
-  // Total arc = 180 degrees (PI radians)
-  // Convert pct to angle split point (in degrees from left=180 to right=0)
-  // greenDeg = (1-pct/100)*180, measured from left going clockwise to top to right
-  const greenFrac=(100-pct)/100;
-  const redFrac=pct/100;
-  // Points: left end, split point, right end
-  function ptFromAngle(angleDeg){
-    const rad=angleDeg*Math.PI/180;
-    return{x:(cx+R*Math.cos(rad)).toFixed(2),y:(cy-R*Math.sin(rad)).toFixed(2)};
-  }
-  const leftPt=ptFromAngle(180);   // left end of semicircle
-  const rightPt=ptFromAngle(0);    // right end
-  // split angle: start from 180, go by (greenFrac * 180) degrees counterclockwise
-  const splitAngle=180-(greenFrac*180);
-  const splitPt=ptFromAngle(splitAngle);
+  const green=100-pct;
   const color=pct>50?'#dc2626':pct>25?'#d97706':'#16a34a';
-  let greenPath='',redPath='';
-  if(pct===0){
-    // All green
-    greenPath=`<path d="M ${leftPt.x} ${leftPt.y} A ${R} ${R} 0 0 1 ${rightPt.x} ${rightPt.y}" fill="none" stroke="#16a34a" stroke-width="${sw}" stroke-linecap="round"/>`;
-  }else if(pct===100){
-    // All red
-    redPath=`<path d="M ${leftPt.x} ${leftPt.y} A ${R} ${R} 0 0 1 ${rightPt.x} ${rightPt.y}" fill="none" stroke="#dc2626" stroke-width="${sw}" stroke-linecap="round"/>`;
-  }else{
-    const gLarge=greenFrac>0.5?1:0;
-    const rLarge=redFrac>0.5?1:0;
-    greenPath=`<path d="M ${leftPt.x} ${leftPt.y} A ${R} ${R} 0 ${gLarge} 1 ${splitPt.x} ${splitPt.y}" fill="none" stroke="#16a34a" stroke-width="${sw}" stroke-linecap="round"/>`;
-    redPath=`<path d="M ${splitPt.x} ${splitPt.y} A ${R} ${R} 0 ${rLarge} 1 ${rightPt.x} ${rightPt.y}" fill="none" stroke="#dc2626" stroke-width="${sw}" stroke-linecap="round"/>`;
-  }
-  return`<svg viewBox="0 0 130 80" width="130" height="80">
-    <path d="M ${leftPt.x} ${leftPt.y} A ${R} ${R} 0 0 1 ${rightPt.x} ${rightPt.y}" fill="none" stroke="#e5e7eb" stroke-width="${sw}" stroke-linecap="round"/>
-    ${greenPath}${redPath}
-    <text x="${cx}" y="${cy+2}" text-anchor="middle" font-size="19" font-weight="600" font-family="DM Mono,monospace" fill="${color}">${pct}%</text>
-    <text x="${cx}" y="${cy+18}" text-anchor="middle" font-size="9" fill="#9ca3af">interest bearing</text>
-    <text x="6" y="${cy+22}" text-anchor="start" font-size="8" fill="#16a34a">●</text>
-    <text x="14" y="${cy+22}" text-anchor="start" font-size="8" fill="#9ca3af">healthy</text>
-    <text x="${cx+14}" y="${cy+22}" text-anchor="start" font-size="8" fill="#dc2626">●</text>
-    <text x="${cx+22}" y="${cy+22}" text-anchor="start" font-size="8" fill="#9ca3af">aging</text>
-  </svg>`;
+  // CSS conic-gradient semicircle using a clip trick
+  // We draw a full circle with conic-gradient then clip top half
+  // Green is on the LEFT (start), Red is on the RIGHT (end)
+  // Conic goes: green from 0 to green%, red from green% to 100%
+  // But we only show the bottom half (180deg sweep) via clip-path
+  // Conic-gradient for a semicircle:
+  // Start at 270deg (left of circle), sweep 180deg clockwise to 90deg (right)
+  // Green occupies first (green/100)*180 degrees, red the rest
+  const greenDeg=Math.round((green/100)*180);
+  const redStart=270+greenDeg;
+  const gradient=`conic-gradient(from 270deg, #16a34a 0deg, #16a34a ${greenDeg}deg, #dc2626 ${greenDeg}deg, #dc2626 180deg, transparent 180deg)`;
+  return \`<div style="position:relative;width:130px;height:72px;overflow:hidden;margin:0 auto;">
+    <div style="position:absolute;width:130px;height:130px;border-radius:50%;background:\${gradient};top:0;left:0;"></div>
+    <div style="position:absolute;width:90px;height:90px;border-radius:50%;background:white;top:20px;left:20px;"></div>
+    <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:4px;">
+      <span style="font-size:20px;font-weight:700;font-family:'DM Mono',monospace;color:\${color};line-height:1">\${pct}%</span>
+      <span style="font-size:9px;color:#9ca3af;margin-top:1px">interest bearing</span>
+    </div>
+  </div>\`;
 }
 function barChartHTML(cost,floor,owned,maxVal){
   const pct=v=>maxVal>0?Math.min(100,Math.round(Math.max(0,v)/maxVal*100)):0;
@@ -791,7 +768,7 @@ function renderDashboard(c){
         <div class="dash-card-count">${Object.keys(soldUnits).length}</div>
       </div>
     </div>
-    ${soldList.length?`<div class="sold-list">${soldList.map(s=>`<div class="sold-item"><span class="sold-badge">SOLD</span><span class="sold-item-name">${s.name}</span><span class="sold-item-date">${s.date}</span><span class="td-mono" style="font-size:10px">${s.stock}</span></div>`).join('')}</div>`:''}
+    ${soldList.length?`<div class="sold-list">${soldList.map(s=>`<div class="sold-item"><span class="sold-badge">SOLD</span><span class="sold-item-name">${s.name}</span><span class="td-mono" style="font-size:10px">${s.stock}</span><span class="sold-item-date">${s.date}${s.soldBy?' · '+s.soldBy:''}</span></div>`).join('')}</div>`:''}
 
     <div class="section-label">Information Missing</div>
     <div class="card-grid">
@@ -822,27 +799,27 @@ function renderDashboard(c){
       <div class="fin-card">
         <div class="fin-card-title">Scotland — Floor Plan Aging</div>
         ${dialSVG(fS.pct)}
-        <div class="dial-legend">
-          <span><span class="dot" style="background:#16a34a"></span>1–270d</span>
-          <span><span class="dot" style="background:#dc2626"></span>271d+</span>
+        <div style="display:flex;gap:10px;font-size:10px;margin-top:6px;justify-content:center">
+          <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#16a34a;margin-right:3px"></span>1–270d healthy</span>
+          <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#dc2626;margin-right:3px"></span>271d+ aging</span>
         </div>
         <div style="font-size:10px;color:var(--gray-400);margin-top:4px">Floor plan: ${fmtM(fS.totalFloor)}</div>
       </div>
       <div class="fin-card">
         <div class="fin-card-title">Mallard — Floor Plan Aging</div>
         ${dialSVG(fM.pct)}
-        <div class="dial-legend">
-          <span><span class="dot" style="background:#16a34a"></span>1–270d</span>
-          <span><span class="dot" style="background:#dc2626"></span>271d+</span>
+        <div style="display:flex;gap:10px;font-size:10px;margin-top:6px;justify-content:center">
+          <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#16a34a;margin-right:3px"></span>1–270d healthy</span>
+          <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#dc2626;margin-right:3px"></span>271d+ aging</span>
         </div>
         <div style="font-size:10px;color:var(--gray-400);margin-top:4px">Floor plan: ${fmtM(fM.totalFloor)}</div>
       </div>
       <div class="fin-card">
         <div class="fin-card-title">Total — Floor Plan Aging</div>
         ${dialSVG(fAll.pct)}
-        <div class="dial-legend">
-          <span><span class="dot" style="background:#16a34a"></span>1–270d</span>
-          <span><span class="dot" style="background:#dc2626"></span>271d+</span>
+        <div style="display:flex;gap:10px;font-size:10px;margin-top:6px;justify-content:center">
+          <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#16a34a;margin-right:3px"></span>1–270d healthy</span>
+          <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#dc2626;margin-right:3px"></span>271d+ aging</span>
         </div>
         <div style="font-size:10px;color:var(--gray-400);margin-top:4px">Floor plan: ${fmtM(fAll.totalFloor)}</div>
       </div>
