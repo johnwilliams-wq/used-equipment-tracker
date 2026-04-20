@@ -691,7 +691,7 @@
 <script>
 // ── CONFIG ──
 const CLIENT_ID = '659141396162-8iilhoicrtpnnpie0m88m8f69lulgg4l.apps.googleusercontent.com';
-const SCOPES = 'https://www.googleapis.com/auth/drive';
+const SCOPES = 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email';
 const SHARED_DRIVE_NAME = 'Used Equipment Tracker';
 const INVENTORY_FOLDER_NAME = 'Used Equipment Data';
 const PHOTOS_FOLDER_NAME = 'Used Equipment Photos';
@@ -718,7 +718,11 @@ function initGoogleAuth() {
     client_id: CLIENT_ID,
     scope: SCOPES,
     callback: async (resp) => {
-      if (resp.error) { showToast('Sign in failed'); return; }
+      if (resp.error) {
+        console.error('Auth error:', resp);
+        showToast('Sign in failed: ' + (resp.error_description || resp.error), 5000);
+        return;
+      }
       accessToken = resp.access_token;
       await loadUserInfo();
       showApp();
@@ -727,7 +731,7 @@ function initGoogleAuth() {
 }
 
 function signIn() {
-  tokenClient.requestAccessToken({ prompt: 'consent' });
+  tokenClient.requestAccessToken({ prompt: 'consent', include_granted_scopes: true });
 }
 
 function signOut() {
